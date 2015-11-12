@@ -125,11 +125,15 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
 STATIC_URL = '/static/'
-#STATIC_ROOT = os.path.join(WSGI_DIR, 'static')
-STATIC_ROOT = ''
-STATICFILES_DIRS = (
-    os.path.join(WSGI_DIR, 'static'),
-)
+
+if DEBUG:
+    STATIC_ROOT = ''
+    STATICFILES_DIRS = (
+        os.path.join(WSGI_DIR, 'static'),
+    )
+else:
+    STATIC_ROOT = os.path.join(WSGI_DIR, 'static')
+
 
 
 LOGIN_URL = '/login/'
