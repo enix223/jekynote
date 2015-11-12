@@ -1,0 +1,67 @@
+<div class="uk-grid uk-margin-small-left">
+	{% if status == 'UNAUTHORIZED' %}
+	<div class="uk-width-medium-1-1 uk-text-danger">
+		Please visit <a href="{% url 'console' %}">Authorization tab</a>, and make authorization first.
+	</div>
+	{% else %}
+	<div class="uk-width-medium-5-10 uk-panel uk-panel-box uk-panel-space">
+		<h3 class="uk-panel-title">Your Evernote notebooks</h3>
+		<select id="select-notebook">
+			{% for notebook in notebooks %}
+			<option value="{{ notebook.guid }}">{{ notebook.name }}</option>
+			{% endfor %}
+		</select>
+	</div>
+
+	<div class="uk-width-medium-5-10 uk-panel uk-panel-box uk-panel-space">
+		<h3 class="uk-panel-title">Your Jekyll repo</h3>
+		<select id="select-repo">				
+		</select>
+	</div>
+
+	<div class="uk-width-medium-1-1 uk-margin-large-top">
+		<table class="uk-table uk-table-striped">
+			<caption>Notes</caption>
+			<thead>
+				<tr>
+					<th>Title</th>
+					<th>Created at</th>
+					<th>Updated at</th>
+					<th>Markdown file name</th>
+					<th>Action</th>
+				</tr>
+			</thead>
+			<tbody id="table-notes">				
+			</tbody>
+		</table>
+		<ul class="uk-list uk-list-line" id="table-notes">
+		</ul>
+	</div>
+
+	{% verbatim %}
+	<!-- notes template -->
+	<script type="text/html" id="table-notes-tmpl">
+		{{each list}}		
+		<tr>
+			<td>{{$value.title}}</td>
+			<td>{{$value.created}}</td>
+			<td>{{$value.updated}}</td>
+			<td>
+				<input type="text" name="title-{{$value.guid}}" />.md
+			</td>
+			<td><a class="uk-button uk-button-success uk-button-small" 
+				href="{% url 'publish' %}/{{$value.guid}}">Publish</a></td>
+		</tr>
+		{{/each}}
+	</script>
+
+	<!-- Github repo -->
+	<script type="text/html" id="repo-tmpl">
+		{{each list}}
+		<option value="{{ repo.guid }}">{{ repo.name }}</option>
+		{{/each}}
+	</script>
+	{% endverbatim %}
+
+	{% endif %}
+</div>

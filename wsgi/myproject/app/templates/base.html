@@ -1,0 +1,39 @@
+{% load staticfiles %}
+
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="description" content="">
+	<meta name="keywords" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>{% block title %}{% endblock %}</title>
+    <!-- Fav icon -->
+    <link rel="shortcut icon" href="{% static 'favicon.ico' %}" type="image/x-icon">
+    <link rel="icon" href="{% static 'favicon.ico' %}" type="image/x-icon">
+    <link rel="apple-touch-icon" href="{% static 'apple-touch-icon.png' %}"/>
+
+    <!-- Stylesheet -->
+	<!--link rel="stylesheet" href="//cdn.bootcss.com/uikit/2.22.0/css/uikit.min.css" /-->
+	<link rel="stylesheet" href="{% static 'uikit/2.23.0/css/uikit.min.css' %}" />
+
+	{% block customCSS %}{% endblock %}
+</head>
+
+<body>
+
+{% block content %}{% endblock %}
+
+{% block footer %}{% endblock %}
+
+<!--script src="http://cdn.bootcss.com/jquery/2.0.0/jquery.min.js"></script-->
+<script src="{% static 'jquery/2.0.0/jquery.min.js' %}"></script>
+<!--script src="//cdn.bootcss.com/uikit/2.22.0/js/uikit.min.js"></script-->
+<script src="{% static 'uikit/2.23.0/js/uikit.min.js' %}"></script>
+
+<!-- Page Custom Js -->
+{% block customJs %}{% endblock %}
+
+</body>
+
+</html>

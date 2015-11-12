@@ -48,6 +48,8 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'app',
+    'south',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -55,7 +57,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
+    #'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
@@ -85,13 +87,25 @@ WSGI_APPLICATION = 'myproject.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        # GETTING-STARTED: change 'db.sqlite3' to your sqlite3 database:
-        'NAME': os.path.join(DATA_DIR, 'db.sqlite3'),
+if DEBUG:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            # GETTING-STARTED: change 'db.sqlite3' to your sqlite3 database:
+            'NAME': os.path.join(DATA_DIR, 'db.sqlite3'),
+        }
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'HOST': 'localhost',
+            'NAME': 'evnote2jekyll',
+            'USER': 'adminJ8KkUZP',
+            'PASSWORD': 'lS5vc4m1PAjm',
+            'PORT': '3306',
+        }
+    }
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
@@ -111,4 +125,21 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(WSGI_DIR, 'static')
+#STATIC_ROOT = os.path.join(WSGI_DIR, 'static')
+STATIC_ROOT = ''
+STATICFILES_DIRS = (
+    os.path.join(WSGI_DIR, 'static'),
+)
+
+
+LOGIN_URL = '/login/'
+LOGIN_REDIRECT_URL = '/console/'
+
+# Evernote related Constant
+EVERNOTE_CUSUMER_KEY = 'enixyu'
+EVERNOTE_CUSUMER_SECRET = 'd1a2d1b3f1940d51'
+EVERNOTE_DEVELOPER_TOKEN = 'S=s1:U=91a6c:E=1583dbbcf62:C=150e60aa220:P=1cd:A=en-devtoken:V=2:H=becbc7f5f84b6913279853e65381ddef'
+
+# GITHUB related constant
+GITHUB_CLIENT_ID = '1c9900220b2ba1c6b123'
+GITHUB_CLIENT_SECRET = '4f4e7e81485f8167801615959e7fff87f434d01c'

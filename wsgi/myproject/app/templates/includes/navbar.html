@@ -1,0 +1,25 @@
+<nav class="uk-navbar">    
+	<a href="" class="uk-navbar-brand">Brand</a>
+	<div class="uk-navbar-flip">
+        <ul class="uk-navbar-nav">
+        	{% if not user.is_authenticated %}
+        	<li><a href="{% url 'signon' %}">Signon</a></li>
+        	{% endif %}
+            <li class="uk-parent" data-uk-dropdown="{mode:'click'}">
+            	{% if not user.is_authenticated %}
+	            <a href="{% url 'login' %}">Sigin</a>
+	            {% else %}
+	            <a href>{{ user.username }}</a>
+	            {% endif %}
+	            {% if user.is_authenticated %}
+	            <div class="uk-dropdown uk-dropdown-navbar">
+	            	<ul class="uk-nav uk-nav-navbar">
+	            		<li><a href="{% url 'console' %}">Console</a></li>
+	            		<li><a href="{% url 'logout' %}">Signout</a></li>
+	            	</ul>
+	            </div>
+	            {% endif %}
+            </li>
+        </ul>
+    </div>
+</nav>

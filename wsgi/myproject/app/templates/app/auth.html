@@ -1,0 +1,35 @@
+<div class="uk-grid">
+	<div class="uk-width-medium-1-1">
+		<h3>Evernote access token</h3>
+		{% if not profile.en_access_token %}
+		<div>
+			<p>Please click the following button to authorize app to access your Evernote data.</p>
+			<a href="{{ en_auth_url }}" class="uk-button uk-button-danger uk-button-small">Get Evernote Authorization</a>
+		</div>
+		{% else %}
+		<div>	
+			<p>We have got your access token from evernote.</p>
+			<a href="{{ en_auth_url }}" class="uk-button uk-button-primary uk-button-small">Re-Authorization</a>
+		</div>
+	{% endif %}
+	</div>
+
+	<div class="uk-width-medium-1-1 uk-margin-top uk-margin-bottom">
+		<hr>
+	</div>
+
+	<div class="uk-width-medium-1-1">
+		<h3>Github access token</h3>
+		{% if not profile.gh_access_token %}
+		<div>
+			<p>Please click the following button to authorize app to access your Evernote data.</p>
+			<a href="{{ gh_auth_url }}" class="uk-button uk-button-danger uk-button-small">Get Github Authorization</a>
+		</div>
+		{% else %}
+		<div>	
+			<p>We have got your access token from Github.</p>
+			<a href="{{ gh_auth_url }}" class="uk-button uk-button-primary uk-button-small">Re-Authorization</a>
+		</div>
+	{% endif %}
+	</div>
+</div>

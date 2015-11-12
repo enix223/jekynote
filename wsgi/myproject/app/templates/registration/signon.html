@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="uk-grid">
+	<div class="uk-width-1-1">
+		{% include 'includes/navbar.html' %}
+	</div>
+</div>
+<div class="uk-grid">
+	<div class="uk-width-medium-3-10 uk-container-center">
+		<div class="uk-panel">
+			<h3 class="uk-panel-title">Signon</h3>
+			<hr>
+			<form class="uk-form uk-form-horizontal" action="#"  method="POST">
+				
+				<!-- General Errors -->
+				{% if form.non_field_errors %}
+				<div class="uk-form-row">
+					<div class="uk-alert uk-alert-danger">
+						<a href="" class="uk-alert-close uk-close"></a>
+						<p>{{ form.non_field_errors|striptags }}</p>
+					</div>
+				</div>
+				{% endif %}
+
+				<fieldset>
+					{% csrf_token %}
+					<div class="uk-form-row">
+						<label class="uk-form-label" for="username">Username/Email</label>
+						<input class="uk-width-medium-1-1 uk-form-control" name="username" 
+							type="email" placeholder="Your@email.address">
+						<div class="uk-text-danger">{{ form.username.errors|striptags }}</div>
+					</div>
+					<div class="uk-form-row">
+						<label class="uk-form-label" for="password">Password</label>
+						<input class="uk-width-medium-1-1 uk-form-control" name="password1" 
+							type="password" placeholder="password">
+						<div class="uk-text-danger">{{ form.password1.errors|striptags }}</div>
+					</div>
+					<div class="uk-form-row">
+						<label class="uk-form-label" for="password">Confirm Password</label>
+						<input class="uk-width-medium-1-1 uk-form-control" name="password2" 
+							type="password" placeholder="confirm password">
+						<div class="uk-text-danger">{{ form.password2.errors|striptags }}</div>
+					</div>
+					<div class="uk-form-row">
+						<button class="uk-button uk-button-success">Create Account</button>
+					</div>
+				</fieldset>
+			</form>
+		</div>
+	</div>
+</div>
+{% endblock %}

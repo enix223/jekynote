@@ -2,6 +2,8 @@
 *.sw[po]
 *.bak
 *.orig
+*.DS_Store
+*.sqlite3
 *~
 .project
 .pydevproject
