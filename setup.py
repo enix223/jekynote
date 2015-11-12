@@ -4,20 +4,29 @@ from setuptools import setup
 
 setup(
     # GETTING-STARTED: set your app name:
-    name='YourAppName',
+    name='evnote2jekyll',
     # GETTING-STARTED: set your app version:
     version='1.0',
     # GETTING-STARTED: set your app description:
-    description='OpenShift App',
+    description='Integrate Evernote with jekyll blog site',
     # GETTING-STARTED: set author name (your name):
-    author='Your Name',
+    author='Enix Yu',
     # GETTING-STARTED: set author email (your email):
-    author_email='example@example.com',
+    author_email='enix223@163.com',
     # GETTING-STARTED: set author url (your url):
     url='http://www.python.org/sigs/distutils-sig/',
     # GETTING-STARTED: define required django version:
     install_requires=[
-        'Django==1.8.4'
+        'Django==1.8.4',
+	'beautifulsoup4==4.4.1',
+	'evernote==1.25.1',
+	'html2text==2015.11.4',
+	'MySQL-python==1.2.5',
+	'oauth2==1.9.0.post1',
+	'PyGithub==1.26.0',
+	'requests==2.8.1',
+	'six==1.10.0',
+	'South==1.0.2'
     ],
     dependency_links=[
         'https://pypi.python.org/simple/django/'
