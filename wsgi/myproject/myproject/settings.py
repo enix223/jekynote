@@ -99,11 +99,11 @@ else:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.mysql',
-            'HOST': 'localhost',
-            'NAME': 'evnote2jekyll',
-            'USER': 'adminJ8KkUZP',
-            'PASSWORD': 'lS5vc4m1PAjm',
-            'PORT': '3306',
+            'HOST': os.environ.get('OPENSHIFT_MYSQL_DB_HOST'),
+            'NAME': os.environ.get('OPENSHIFT_GEAR_NAME'),
+            'USER': os.environ.get('OPENSHIFT_MYSQL_DB_USERNAME'),
+            'PASSWORD': os.environ.get('OPENSHIFT_MYSQL_DB_PASSWORD'),
+            'PORT': os.environ.get('OPENSHIFT_MYSQL_DB_PORT'),
         }
     }
 
