@@ -2,7 +2,7 @@ $(function(){
 
 	var $template = $('#table-notes-tmpl'),
 		$notebook = $('#select-notebook').val(),
-		$modal = UIkit.modal('#modal-loading'),
+		//$modal = UIkit.modal('#modal-loading'),
 		/**
 		  * @breif  A simple wrapper for artTemplate template func.
 		  * @param  template_selector, the render template selector

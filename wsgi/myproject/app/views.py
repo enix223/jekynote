@@ -66,19 +66,19 @@ class ConsoleView(TemplateView):
             app_url=reverse('evernote-auth'),
         )
 
-        if not profile or not profile.en_access_token:
+        # if not profile or not profile.en_access_token:
             # Generate Evernote request token url
-            client = helper.get_evernote_client()
-            req_token = client.get_request_token(callback_url)
-            url = client.get_authorize_url(req_token)
-            context['en_auth_url'] = url
-            self.request.session['en_req_token'] = req_token
+        client = helper.get_evernote_client()
+        req_token = client.get_request_token(callback_url)
+        url = client.get_authorize_url(req_token)
+        context['en_auth_url'] = url
+        self.request.session['en_req_token'] = req_token
 
-        if not profile or not profile.gh_access_token:
-            # Generate Github request token url
-            client = helper.get_github_client()
-            url = client.get_authorize_url()
-            context['gh_auth_url'] = url
+        # if not profile or not profile.gh_access_token:
+        # Generate Github request token url
+        client = helper.get_github_client()
+        url = client.get_authorize_url()
+        context['gh_auth_url'] = url
 
         context['profile'] = profile
         return context
@@ -92,19 +92,18 @@ class EvernoteAuthView(TemplateView):
     def dispatch(self, *args, **kwargs):
         return super(EvernoteAuthView, self).dispatch(*args, **kwargs)
 
-    def get(self, request, *args, **kwargs):
+    def get_context_data(self, **kwargs):
         # Get the access token from call back url param
-        context = self.get_context_data()
-        req_token = request.session.get('en_req_token', '')
+        context = super(EvernoteAuthView, self).get_context_data(**kwargs)
+        req_token = self.request.session.get('en_req_token', '')
         if req_token:
             client = helper.get_evernote_client()
             access_token = client.get_access_token(
               req_token['oauth_token'],
               req_token['oauth_token_secret'],
-              request.GET.get('oauth_verifier', '')
+              self.request.GET.get('oauth_verifier', '')
             )
-            del request.session['en_req_token']
-            request.session['access_token'] = access_token
+            del self.request.session['en_req_token']
 
         # Save the access token to UserProfile model
         try:
@@ -118,7 +117,7 @@ class EvernoteAuthView(TemplateView):
 
         context['profile'] = profile
         context['step'] = 1
-        return super(EvernoteAuthView, self).get(request, *args, **kwargs)
+        return context
 
 
 class GithubAuthView(TemplateView):
@@ -129,13 +128,14 @@ class GithubAuthView(TemplateView):
     def dispatch(self, *args, **kwargs):
         return super(GithubAuthView, self).dispatch(*args, **kwargs)
 
-    def get(self, request, *args, **kwargs):
+    def get_context_data(self, **kwargs):
         # Get the access token from call back url param
-        context = self.get_context_data()
+        context = super(GithubAuthView, self).get_context_data(**kwargs)
         client = helper.get_github_client()
         access_token = client.get_access_token(
-            request.GET.get('code', ''))
-        request.session['access_token'] = access_token
+            self.request.GET.get('code', ''),
+            reverse('github-auth')
+        )
 
         # Save the access token to UserProfile model
         try:
@@ -149,7 +149,7 @@ class GithubAuthView(TemplateView):
 
         context['profile'] = profile
         context['step'] = 1
-        return super(GithubAuthView, self).get(request, *args, **kwargs)
+        return context
 
 
 class GetNotebooksView(TemplateView, JSONResponseMixin):

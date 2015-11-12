@@ -23,14 +23,17 @@ class GithubClient(object):
             urllib.quote(scope)
         )
 
-    def get_access_token(self, code):
-        header = {'content-type': 'application/json', 'Accept': 'application/json'}
+    def get_access_token(self, code, redirect_uri):
+        header = {
+            'content-type': 'application/json',
+            'Accept': 'application/json'}
         resp = requests.post(
             self._get_endpoint('login/oauth/access_token'),
             data=json.dumps({
                 'client_id': self.consumer_key,
                 'client_secret': self.consumer_secret,
-                'code': code
+                'code': code,
+                'redirect_uri': redirect_uri
             }),
             headers=header
         )
