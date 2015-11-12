@@ -1,6 +1,10 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
 
+{% block customCSS %}
+<link rel="stylesheet" href="{% static 'uikit/2.23.0/css/components/notify.min.css' %}" />
+{% endblock %}
+
 {% block content %}
 <div class="uk-grid">
 	<div class="uk-width-1-1">
@@ -36,13 +40,14 @@
 <!-- Modal -->
 <div class="uk-modal" id="modal-loading">
 	<div class="uk-modal-dialog">
-		<div class="uk-modal-spinner uk-icon-spin">Loading</div>
+		<div class="uk-modal-spinner uk-icon-spin"></div>
 	</div>
 </div>
 {% endblock %}
 
 {% block customJs %}
 <script type="text/javascript" src="{% static 'artTemplate/3.0.0/template.js' %}"></script>
+<script src="{% static 'uikit/2.23.0/js/components/notify.min.js' %}"></script>
 
 {% if step == 2%}
 <script type="text/javascript" src="{% static 'app/app.js' %}"></script>

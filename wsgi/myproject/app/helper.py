@@ -8,7 +8,7 @@ import time
 
 def get_github_client(access_token=None):
     if access_token:
-        client = GithubClient(access_token)
+        client = GithubClient(token=access_token)
     else:
         client = GithubClient(
           consumer_key=settings.GITHUB_CLIENT_ID,

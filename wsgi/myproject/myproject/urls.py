@@ -29,5 +29,6 @@ urlpatterns = [
     url(r'^notebooks/(?P<notebook>[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})/notes/$',
         GetNotesView.as_view(), name='notes'),
     url(r'^github-repo/$', GetRepoView.as_view(), name="github-repo"),
-    url(r'^', include('django.contrib.auth.urls'))
+    url(r'^', include('django.contrib.auth.urls')),
+    url(r'^$', ConsoleView.as_view(), name='home')
 ]

@@ -58,8 +58,6 @@ class GithubClient(object):
             url += "/%s" % path
         return url
 
-    def get_github_store(self, token, refresh=False):
-        if not self.github or refresh:
-            self.github = Github(token)
-        return self.github
+    def get_github_store(self):
+        return Github(self.token)
 

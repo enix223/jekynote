@@ -57,9 +57,6 @@ class ConsoleView(TemplateView):
 
         try:
             profile = UserProfile.objects.get(user=self.request.user)
-            # Get the token if exist
-            self.request.session['en_access_token'] = profile.en_access_token
-            self.request.session['gh_access_token'] = profile.gh_access_token
         except UserProfile.DoesNotExist:
             profile = None
 
@@ -116,9 +113,6 @@ class EvernoteAuthView(TemplateView):
                 user=self.request.user,
                 en_access_token=access_token)
 
-        # save the access token in session
-        self.request.session['en_access_token'] = profile.en_access_token
-
         context['profile'] = profile
         context['step'] = 1
         return context
@@ -150,9 +144,6 @@ class GithubAuthView(TemplateView):
             profile = UserProfile.objects.create(
                 user=self.request.user,
                 en_access_token=access_token)
-
-        # save gh access token in session
-        self.request.session['gh_access_token'] = profile.gh_access_token
 
         context['profile'] = profile
         context['step'] = 1
@@ -253,14 +244,17 @@ class GetRepoView(JSONResponseMixin, TemplateView):
     def dispatch(self, *args, **kwargs):
         return super(GetRepoView, self).dispatch(*args, **kwargs)
 
-    def get_context_data(self, **kwargs):
-        access_token = self.session.get('gh_access_token', '')
-        client = helper.get_github_client(access_token)
-        github_store = client.get_github_store()
-        data = []
-        for repo in github_store.get_user().get_repos():
-            d = {}
-            d['id'] = repo.id
-            d['name'] = repo.name
-            data.append(d)
-        return self.render_to_json_response(data)
+    def render_to_response(self, context):
+        try:
+            profile = UserProfile.objects.get(user=self.request.user)
+            client = helper.get_github_client(profile.gh_access_token)
+            github_store = client.get_github_store()
+            data = []
+            for repo in github_store.get_user().get_repos():
+                d = {}
+                d['id'] = repo.id
+                d['name'] = repo.name
+                data.append(d)
+            return self.render_to_json_response(data)
+        except Exception, e:
+            return self.render_to_json_response({'rc': -1, 'msg': str(e)})

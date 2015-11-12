@@ -44,8 +44,8 @@
 		{{each list}}		
 		<tr>
 			<td>{{$value.title}}</td>
-			<td>{{$value.created}}</td>
-			<td>{{$value.updated}}</td>
+			<td>{{$value.created | dateFormat}}</td>
+			<td>{{$value.updated | dateFormat}}</td>
 			<td>
 				<input type="text" name="title-{{$value.guid}}" />.md
 			</td>
@@ -58,7 +58,7 @@
 	<!-- Github repo -->
 	<script type="text/html" id="repo-tmpl">
 		{{each list}}
-		<option value="{{ repo.guid }}">{{ repo.name }}</option>
+		<option value="{{$value.id}}">{{$value.name}}</option>
 		{{/each}}
 	</script>
 	{% endverbatim %}
