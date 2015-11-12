@@ -23,7 +23,7 @@ setup(
 	'html2text==2015.11.4',
 	'MySQL-python==1.2.5',
 	'oauth2==1.9.0.post1',
-	'PyGithub==1.26.0',
+	'pygithub',
 	'requests==2.8.1',
 	'six==1.10.0',
 	'South==1.0.2'
