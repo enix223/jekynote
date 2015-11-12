@@ -50,20 +50,37 @@ $(function(){
 					$fnTemplateHelper('repo-tmpl', '#select-repo', data);
 				},
 				complete: function(){
+					UI.formSelect(".uk-form-select");
 				}
 			});
 		},
-		$fnDateFormat = function(timestamp){
-			var a = new Date(timestamp*1000);
-			var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-			var year = a.getFullYear();
-			var month = months[a.getMonth()];
-			var date = a.getDate();
-			var hour = a.getHours();
-			var min = a.getMinutes();
-			var sec = a.getSeconds();
-			var time = date + ' ' + month + ' ' + year + ' ' + hour + ':' + min + ':' + sec ;
-			return time;
+		$fnDateFormat = function(timestamp, format){
+		    date = new Date(timestamp);
+
+		    var map = {
+		        "M": date.getMonth() + 1, //月份 
+		        "d": date.getDate(), //日 
+		        "h": date.getHours(), //小时 
+		        "m": date.getMinutes(), //分 
+		        "s": date.getSeconds(), //秒 
+		        "q": Math.floor((date.getMonth() + 3) / 3), //季度 
+		        "S": date.getMilliseconds() //毫秒 
+		    };
+		    format = format.replace(/([yMdhmsqS])+/g, function(all, t){
+		        var v = map[t];
+		        if(v !== undefined){
+		            if(all.length > 1){
+		                v = '0' + v;
+		                v = v.substr(v.length-2);
+		            }
+		            return v;
+		        }
+		        else if(t === 'y'){
+		            return (date.getFullYear() + '').substr(4 - all.length);
+		        }
+		        return all;
+		    });
+		    return format;
 		};
 
 	// Register dateFormat helper

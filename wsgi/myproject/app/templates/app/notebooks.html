@@ -5,27 +5,32 @@
 	</div>
 	{% else %}
 	<div class="uk-width-medium-5-10 uk-panel uk-panel-box uk-panel-space">
-		<h3 class="uk-panel-title">Your Evernote notebooks</h3>
-		<select id="select-notebook">
-			{% for notebook in notebooks %}
-			<option value="{{ notebook.guid }}">{{ notebook.name }}</option>
-			{% endfor %}
-		</select>
+		<h3 class="uk-panel-title"><i class="uk-icon-book"></i> Your Evernote notebooks</h3>
+		<div class="uk-button uk-form-select" data-uk-form-select>
+			<span></span>
+			<select id="select-notebook">
+				{% for notebook in notebooks %}
+				<option value="{{ notebook.guid }}">{{ notebook.name }}</option>
+				{% endfor %}
+			</select>
+		</div>
 	</div>
 
 	<div class="uk-width-medium-5-10 uk-panel uk-panel-box uk-panel-space">
-		<h3 class="uk-panel-title">Your Jekyll repo</h3>
-		<select id="select-repo">				
-		</select>
+		<h3 class="uk-panel-title"><i class="uk-icon-github"></i> Your Jekyll repo</h3>
+		<div class="uk-button uk-form-select" data-uk-form-select>
+			<span></span>
+			<select id="select-repo">				
+			</select>
+		</div>
 	</div>
 
 	<div class="uk-width-medium-1-1 uk-margin-large-top" style="padding-left: 0">
-		<table class="uk-table uk-table-striped">
+		<!--table class="uk-table uk-table-striped">
 			<caption>Notes</caption>
 			<thead>
 				<tr>
 					<th>Title</th>
-					<th>Created at</th>
 					<th>Updated at</th>
 					<th>Markdown file name</th>
 					<th>Action</th>
@@ -33,7 +38,7 @@
 			</thead>
 			<tbody id="table-notes">				
 			</tbody>
-		</table>
+		</table-->
 		<ul class="uk-list uk-list-line" id="table-notes">
 		</ul>
 	</div>
@@ -42,16 +47,19 @@
 	<!-- notes template -->
 	<script type="text/html" id="table-notes-tmpl">
 		{{each list}}		
-		<tr>
-			<td>{{$value.title}}</td>
-			<td>{{$value.created | dateFormat}}</td>
-			<td>{{$value.updated | dateFormat}}</td>
-			<td>
-				<input type="text" name="title-{{$value.guid}}" />.md
-			</td>
-			<td><a class="uk-button uk-button-success uk-button-small" 
-				href="{% url 'publish' %}/{{$value.guid}}">Publish</a></td>
-		</tr>
+		<li>
+			<div class="uk-grid uk-margin-small-top">
+				<div class="uk-width-medium-4-5">
+					<h3 class="uk-margin-small-bottom">{{$value.title}}</h3>
+					<span class="uk-text-muted uk-text-small">
+						<i class="uk-icon-clock-o"></i> {{$value.updated | dateFormat:"yyyy-MM-dd hh:mm:ss"}}</span>
+				</div>
+				<div class="uk-width-medium-1-5">
+					<a class="uk-button uk-button-success uk-button-small" 
+  						href="{% url 'publish' %}/{{$value.guid}}">Publish</a>
+  				</div>
+  			</div>
+		</li>
 		{{/each}}
 	</script>
 
