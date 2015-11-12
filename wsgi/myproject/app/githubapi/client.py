@@ -3,11 +3,13 @@ import urllib
 import urlparse
 import requests
 import json
+from github import Github
 
 
 class GithubClient(object):
 
     def __init__(self, **options):
+        self.client = None
         self.consumer_key = options.get('consumer_key')
         self.consumer_secret = options.get('consumer_secret')
         default_service_host = 'github.com'
@@ -15,6 +17,7 @@ class GithubClient(object):
         self.additional_headers = options.get('additional_headers', {})
         self.token = options.get('token')
         self.secret = options.get('secret')
+        self.github = None
 
     def get_authorize_url(self, scope='repo'):
         return '%s?client_id=%s&scope=%s' % (
@@ -54,3 +57,9 @@ class GithubClient(object):
         if path is not None:
             url += "/%s" % path
         return url
+
+    def get_github_store(self, token, refresh=False):
+        if not self.github or refresh:
+            self.github = Github(token)
+        return self.github
+

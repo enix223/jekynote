@@ -17,6 +17,7 @@ from django.conf.urls import include, url
 from django.contrib import admin
 from app.views import SignonView, EvernoteAuthView, GithubAuthView
 from app.views import GetNotebooksView, ConsoleView, GetNotesView
+from app.views import GetRepoView
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
@@ -25,7 +26,8 @@ urlpatterns = [
     url(r'^evernote-auth/$', EvernoteAuthView.as_view(), name='evernote-auth'),
     url(r'^github-auth/$', GithubAuthView.as_view(), name='github-auth'),
     url(r'^notebooks/$', GetNotebooksView.as_view(), name='notebooks'),
-    url(r'^notebooks/(?P<notebook>[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})/notes/$', 
+    url(r'^notebooks/(?P<notebook>[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})/notes/$',
         GetNotesView.as_view(), name='notes'),
+    url(r'^github-repo/$', GetRepoView.as_view(), name="github-repo"),
     url(r'^', include('django.contrib.auth.urls'))
 ]

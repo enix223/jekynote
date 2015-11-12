@@ -57,6 +57,9 @@ class ConsoleView(TemplateView):
 
         try:
             profile = UserProfile.objects.get(user=self.request.user)
+            # Get the token if exist
+            self.request.session['en_access_token'] = profile.en_access_token
+            self.request.session['gh_access_token'] = profile.gh_access_token
         except UserProfile.DoesNotExist:
             profile = None
 
@@ -66,15 +69,13 @@ class ConsoleView(TemplateView):
             app_url=reverse('evernote-auth'),
         )
 
-        # if not profile or not profile.en_access_token:
-            # Generate Evernote request token url
+        # Generate Evernote request token url
         client = helper.get_evernote_client()
         req_token = client.get_request_token(callback_url)
         url = client.get_authorize_url(req_token)
         context['en_auth_url'] = url
         self.request.session['en_req_token'] = req_token
 
-        # if not profile or not profile.gh_access_token:
         # Generate Github request token url
         client = helper.get_github_client()
         url = client.get_authorize_url()
@@ -115,6 +116,9 @@ class EvernoteAuthView(TemplateView):
                 user=self.request.user,
                 en_access_token=access_token)
 
+        # save the access token in session
+        self.request.session['en_access_token'] = profile.en_access_token
+
         context['profile'] = profile
         context['step'] = 1
         return context
@@ -146,6 +150,9 @@ class GithubAuthView(TemplateView):
             profile = UserProfile.objects.create(
                 user=self.request.user,
                 en_access_token=access_token)
+
+        # save gh access token in session
+        self.request.session['gh_access_token'] = profile.gh_access_token
 
         context['profile'] = profile
         context['step'] = 1
@@ -237,3 +244,23 @@ class GetNotesView(JSONResponseMixin, TemplateView):
         else:
             data = map(self.serialize, context['notes'])
             return self.render_to_json_response(data)
+
+
+class GetRepoView(JSONResponseMixin, TemplateView):
+    "Get user's repo from github"
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(GetRepoView, self).dispatch(*args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        access_token = self.session.get('gh_access_token', '')
+        client = helper.get_github_client(access_token)
+        github_store = client.get_github_store()
+        data = []
+        for repo in github_store.get_user().get_repos():
+            d = {}
+            d['id'] = repo.id
+            d['name'] = repo.name
+            data.append(d)
+        return self.render_to_json_response(data)
