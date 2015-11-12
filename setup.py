@@ -18,9 +18,9 @@ setup(
     # GETTING-STARTED: define required django version:
     install_requires=[
         'Django==1.6',
-	'beautifulsoup4==4.4.1',
-	'evernote==1.25.1',
-	'html2text==2015.11.4',
+	'beautifulsoup4',
+	'evernote',
+	'html2text',
 	'MySQL-python==1.2.5',
 	'oauth2==1.9.0.post1',
 	'pygithub',
