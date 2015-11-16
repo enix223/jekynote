@@ -135,7 +135,11 @@ else:
     STATIC_ROOT = os.path.join(WSGI_DIR, 'static')
 
 
+# Web site title
+WEBSITE_TITLE = 'Jekynote'
+WEBSITE_SOLOGAN = 'Publish your notes to jekyll site'
 
+# Login settings
 LOGIN_URL = '/login/'
 LOGIN_REDIRECT_URL = '/console/'
 
@@ -147,3 +151,52 @@ EVERNOTE_DEVELOPER_TOKEN = 'S=s1:U=91a6c:E=1583dbbcf62:C=150e60aa220:P=1cd:A=en-
 # GITHUB related constant
 GITHUB_CLIENT_ID = '1c9900220b2ba1c6b123'
 GITHUB_CLIENT_SECRET = '4f4e7e81485f8167801615959e7fff87f434d01c'
+
+# Logging settings
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': True,
+    'formatters': {
+        'verbose': {
+            'format': '%(levelname)s %(asctime)s %(module)s %(process)d %(thread)d %(message)s'
+        },
+        'simple': {
+            'format': '%(levelname)s %(message)s'
+        }
+    },
+    'handlers': {
+        'null': {
+            'level': 'DEBUG',
+            'class': 'django.utils.log.NullHandler',
+        },
+        'console': {
+            'level': 'DEBUG',
+            'class': 'logging.StreamHandler',
+            'formatter': 'simple'
+        },
+        'mail_admins': {
+            'level': 'ERROR',
+            'class': 'django.utils.log.AdminEmailHandler'
+        },
+        'file': {
+            'level': 'DEBUG',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': os.path.join(WSGI_DIR, 'log', 'django.log'),
+            'maxBytes': 1024*1024*5,
+            'backupCount': 10,
+            'formatter': 'verbose',
+        }
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['null'],
+            'propagate': True,
+            'level': 'INFO',
+        },
+        'django.request': {
+            'handlers': ['file'],
+            'level': 'ERROR',
+            'propagate': False,
+        },
+    }
+}

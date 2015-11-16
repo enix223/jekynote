@@ -1,6 +1,5 @@
 import oauth2 as oauth
 import urllib
-import urlparse
 import requests
 import json
 from github import Github
@@ -30,18 +29,23 @@ class GithubClient(object):
         header = {
             'content-type': 'application/json',
             'Accept': 'application/json'}
-        resp = requests.post(
-            self._get_endpoint('login/oauth/access_token'),
-            data=json.dumps({
-                'client_id': self.consumer_key,
-                'client_secret': self.consumer_secret,
-                'code': code,
-                'redirect_uri': redirect_uri
-            }),
-            headers=header
-        )
-        access_token = dict(json.loads(resp.content))
-        self.token = access_token['access_token']
+        try:
+            resp = requests.post(
+                self._get_endpoint('login/oauth/access_token'),
+                data=json.dumps({
+                    'client_id': self.consumer_key,
+                    'client_secret': self.consumer_secret,
+                    'code': code,
+                    'redirect_uri': redirect_uri
+                }),
+                headers=header,
+                timeout=5,
+            )
+            access_token = dict(json.loads(resp.content))
+            self.token = access_token['access_token']
+        except:
+            self.token = None
+
         return self.token
 
     def _get_oauth_client(self, token=None):
@@ -60,4 +64,3 @@ class GithubClient(object):
 
     def get_github_store(self):
         return Github(self.token)
-

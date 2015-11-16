@@ -1,5 +1,7 @@
-<nav class="uk-navbar">    
-	<a href="" class="uk-navbar-brand">Brand</a>
+{% load mytag %}
+
+<nav class="uk-navbar uk-navbar-attached tm-navbar">    
+	<a href="" class="uk-navbar-brand">{% settings_val "WEBSITE_TITLE" %}</a>
 	<div class="uk-navbar-flip">
         <ul class="uk-navbar-nav">
         	{% if not user.is_authenticated %}

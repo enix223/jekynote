@@ -1,5 +1,4 @@
 from django.views.generic import TemplateView
-from django.views.generic.list import ListView, BaseListView
 from django.views.generic.edit import CreateView
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
@@ -8,6 +7,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django import forms
 from django.core.urlresolvers import reverse
 from django.http import HttpResponse
+from django.shortcuts import render_to_response
 
 from evernote.edam.notestore.ttypes import NoteFilter, NotesMetadataResultSpec
 from app.models import UserProfile
@@ -15,8 +15,17 @@ import json
 import helper
 
 
+'''def handler500(request):
+    logging.error(request)
+    response = render_to_response(
+        '500.html', {}, context_instance=RequetContext(request))
+    response.status_code = 500
+    return response
+'''
+
+
 class JSONResponseMixin(object):
-    "A mixin used to render JSON response"
+    """A mixin used to render JSON response"""
     def convert_to_json(self, context):
         return json.dumps(context)
 
@@ -28,13 +37,38 @@ class JSONResponseMixin(object):
         )
 
 
+class EnSerializeMixin(object):
+    """ Evernote serializable mixin """
+    def serialize(self, p_dict):
+        if type(p_dict) == dict:
+            generator = p_dict.items()
+        else:
+            generator = p_dict.__dict__.iteritems()
+
+        d = {}
+        for key, value in generator:
+            if key in self.serialize_filter:
+                d[key] = value
+        return d
+
+
+class GhSerializeMixin(object):
+    """ Github object serializable mixin """
+    def serialize(self, p_obj):
+        d = {}
+        for attr in dir(p_obj):
+            if attr in self.serialize_filter:
+                d[attr] = getattr(p_obj, attr)
+        return d
+
+
 class UserSignonForm(UserCreationForm):
-    "Using EmailField as the username field"
+    """ Using EmailField as the username field """
     username = forms.EmailField()
 
 
 class SignonView(CreateView):
-    "User registration view"
+    """ User registration view """
     template_name = 'registration/signon.html'
     model = User
     form_class = UserSignonForm
@@ -44,7 +78,7 @@ class SignonView(CreateView):
 
 
 class ConsoleView(TemplateView):
-    "User console view"
+    """ User console view """
     template_name = 'app/console.html'
 
     @method_decorator(login_required)
@@ -83,7 +117,7 @@ class ConsoleView(TemplateView):
 
 
 class EvernoteAuthView(TemplateView):
-    " Evernote authorization callback url "
+    """ Evernote authorization callback url """
     template_name = 'app/console.html'
 
     @method_decorator(login_required)
@@ -119,7 +153,7 @@ class EvernoteAuthView(TemplateView):
 
 
 class GithubAuthView(TemplateView):
-    " Github authorization callback url "
+    """ Github authorization callback url """
     template_name = 'app/console.html'
 
     @method_decorator(login_required)
@@ -150,8 +184,34 @@ class GithubAuthView(TemplateView):
         return context
 
 
-class GetNotebooksView(TemplateView, JSONResponseMixin):
-    "Get all the notebooks"
+class PublishView(TemplateView):
+    """ Pulish evernote to jekyll main control panel """
+    template_name = 'app/console.html'
+
+    "Publish console view"
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(PublishView, self).dispatch(*args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super(PublishView, self).get_context_data(**kwargs)
+
+        try:
+            profile = UserProfile.objects.get(user=self.request.user)
+        except Exception:
+            profile = None
+
+        if profile and profile.en_access_token:
+            context['status'] = 'OK'
+        else:
+            context['status'] = 'UNAUTHORIZED'
+
+        context['step'] = 2
+        return context
+
+
+class GetNotebooksView(TemplateView, JSONResponseMixin, EnSerializeMixin):
+    """ Get all the notebooks """
     template_name = 'app/console.html'
 
     @method_decorator(login_required)
@@ -160,8 +220,6 @@ class GetNotebooksView(TemplateView, JSONResponseMixin):
 
     def get_context_data(self, **kwargs):
         context = super(GetNotebooksView, self).get_context_data(**kwargs)
-        context['status'] = 'OK'
-
         try:
             profile = UserProfile.objects.get(user=self.request.user)
         except Exception:
@@ -172,21 +230,23 @@ class GetNotebooksView(TemplateView, JSONResponseMixin):
             client = helper.get_evernote_client(access_token)
             note_store = client.get_note_store()
             context['notebooks'] = note_store.listNotebooks()
+            context['status'] = 'OK'
         else:
             context['status'] = 'UNAUTHORIZED'
 
-        context['step'] = 2
         return context
 
     def render_to_response(self, context):
-        if self.request.GET.get('format') == 'json':
-            return self.render_to_json_response(context)
-        else:
-            return super(GetNotebooksView, self).render_to_response(context)
+        if context['status'] != 'OK':
+            raise Exception('user profile not found')
+
+        self.serialize_filter = ['name', 'guid']
+        data = map(self.serialize, context['notebooks'])
+        return self.render_to_json_response(data)
 
 
-class GetNotesView(JSONResponseMixin, TemplateView):
-    "Get notes with specific notebooks"
+class GetNotesView(JSONResponseMixin, TemplateView, EnSerializeMixin):
+    """ Get notes with specific notebooks """
 
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
@@ -194,7 +254,6 @@ class GetNotesView(JSONResponseMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(GetNotesView, self).get_context_data(**kwargs)
-        context['status'] = 'OK'
         try:
             profile = UserProfile.objects.get(user=self.request.user)
         except Exception:
@@ -215,46 +274,51 @@ class GetNotesView(JSONResponseMixin, TemplateView):
                     includeUpdated=True
                 )
             )
-
+            context['status'] = 'OK'
             context['notes'] = notes_meta_list.notes
         else:
             context['status'] = 'UNAUTHORIZED'
 
         return context
 
-    def serialize(self, p_dict):
-        d = {}
-        for key, value in p_dict.__dict__.iteritems():
-            if value:
-                d[key] = value
-        return d
-
     def render_to_response(self, context):
-        if context['status'] == 'UNAUTHORIZED':
-            return self.render_to_json_response(0)
-        else:
-            data = map(self.serialize, context['notes'])
-            return self.render_to_json_response(data)
+        if context['status'] != 'OK':
+            raise Exception('user profile not found')
+
+        self.serialize_filter = ['title', 'updated', 'guid', 'created']
+        data = map(self.serialize, context['notes'])
+        return self.render_to_json_response(data)
 
 
-class GetRepoView(JSONResponseMixin, TemplateView):
-    "Get user's repo from github"
+class GetRepoView(JSONResponseMixin, TemplateView, GhSerializeMixin):
+    """ Get user's repo from github """
 
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
         return super(GetRepoView, self).dispatch(*args, **kwargs)
 
-    def render_to_response(self, context):
+    def get_context_data(self, **kwargs):
+        context = super(GetRepoView, self).get_context_data(**kwargs)
         try:
+            profile = UserProfile.objects.get(user=self.request.user)
+        except Exception:
+            profile = None
+
+        if profile and profile.en_access_token:
             profile = UserProfile.objects.get(user=self.request.user)
             client = helper.get_github_client(profile.gh_access_token)
             github_store = client.get_github_store()
-            data = []
-            for repo in github_store.get_user().get_repos():
-                d = {}
-                d['id'] = repo.id
-                d['name'] = repo.name
-                data.append(d)
-            return self.render_to_json_response(data)
-        except Exception, e:
-            return self.render_to_json_response({'rc': -1, 'msg': str(e)})
+            self.serialize_filter = ['id', 'name']
+            context['repo'] = github_store.get_user().get_repos()
+            context['status'] = 'OK'
+        else:
+            context['status'] = 'UNAUTHORIZED'
+
+        return context
+
+    def render_to_response(self, context):
+        if context['status'] != 'OK':
+            raise Exception('user profile not found')
+
+        data = map(self.serialize, context['repo'])
+        return self.render_to_json_response(data)

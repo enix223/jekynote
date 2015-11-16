@@ -1,4 +1,5 @@
 {% load staticfiles %}
+{% load mytag %}
 
 <html>
 <head>
@@ -7,7 +8,7 @@
 	<meta name="description" content="">
 	<meta name="keywords" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <title>{% block title %}evnote2Jekyll - Publish your notes to jekyll site{% endblock %}</title>
+    <title>{% block title %}{% settings_val "WEBSITE_TITLE" %} - {% settings_val "WEBSITE_SOLOGAN" %}{% endblock %}</title>
     <!-- Fav icon -->
     <link rel="shortcut icon" href="{% static 'favicon.ico' %}" type="image/x-icon">
     <link rel="icon" href="{% static 'favicon.ico' %}" type="image/x-icon">
@@ -16,6 +17,7 @@
     <!-- Stylesheet -->
 	<!--link rel="stylesheet" href="//cdn.bootcss.com/uikit/2.22.0/css/uikit.min.css" /-->
 	<link rel="stylesheet" href="{% static 'uikit/2.23.0/css/uikit.min.css' %}" />
+	<link rel="stylesheet" href="{% static 'uikit/2.23.0/css/uikit.docs.min.css' %}" />
 
 	{% block customCSS %}{% endblock %}
 </head>

@@ -4,6 +4,7 @@
 {% block customCSS %}
 <link rel="stylesheet" href="{% static 'uikit/2.23.0/css/components/notify.min.css' %}" />
 <link rel="stylesheet" href="{% static 'uikit/2.23.0/css/components/form-select.min.css' %}" />
+<link rel="stylesheet" href="{% static 'uikit/2.23.0/css/components/tooltip.min.css' %}" />
 {% endblock %}
 
 {% block content %}
@@ -17,20 +18,23 @@
 		<div class="uk-panel">
 			<div class="uk-grid">
 				<div class="uk-width-medium-1-4">
-					<ul class="uk-tab uk-tab-left">
-					    <li {% if step == 1 %}class="uk-active"{% endif %}>
-					    	<a href="{% url 'console' %}"><i class="uk-icon-key"></i> Authorization</a></li>
-					    <li {% if step == 2 %}class="uk-active"{% endif %}>
-					    	<a href="{% url 'notebooks' %}"><i class="uk-icon-book"></i> Notebooks</a></li>
-					    <li {% if step == 3 %}class="uk-active"{% endif %}>
-					    	<a href="#"><i class="uk-icon-coffee"></i> Jekyll site</a></li>
-					</ul>
+					<div class="uk-panel uk-panel-box">
+						<h3 class="uk-panel-title">Control Panel</h3>
+						<ul class="uk-nav uk-nav-side uk-nav-parent-icon">
+							<li {% if step == 0 %}class="uk-active"{% endif %}>
+						    	<a href=""><i class="uk-icon-flag"></i> &nbsp;Tutorial</a></li>
+							<li class="uk-nav-divider"></li>							
+						    <li {% if step == 1 %}class="uk-active"{% endif %}>
+						    	<a href="{% url 'console' %}"><i class="uk-icon-key"></i> &nbsp;Authorization</a></li>
+						    <li {% if step == 2 %}class="uk-active"{% endif %}>
+						    	<a href="{% url 'publish' %}"><i class="uk-icon-refresh uk-icon-spin"></i> &nbsp;Publish</a></li>
+						</ul>
+					</div>
 				</div>
 				<div class="uk-width-medium-3-4">
 					<ul id="tab1" class="uk-switcher">
 						<li {% if step == 1 %}class="uk-active"{% endif %}>{% include 'app/auth.html' %}</li>
 						<li {% if step == 2 %}class="uk-active"{% endif %}>{% include 'app/notebooks.html' %}</li>
-						<li {% if step == 3 %}class="uk-active"{% endif %}>{% include 'app/step3.html' %}</li>
 					</ul>
 				</div>
 			</div>
@@ -38,21 +42,20 @@
 	</div>
 </div>
 
-<!-- Modal -->
-<div class="uk-modal" id="modal-loading">
-	<div class="uk-modal-dialog">
-		<div class="uk-modal-spinner uk-icon-spin"></div>
-	</div>
-</div>
+<!-- Notify -->
+<div id="div-ajax-notifier"></div>
+
 {% endblock %}
 
 {% block customJs %}
 <script type="text/javascript" src="{% static 'artTemplate/3.0.0/template.js' %}"></script>
 <script src="{% static 'uikit/2.23.0/js/components/notify.min.js' %}"></script>
 <script src="{% static 'uikit/2.23.0/js/components/form-select.min.js' %}"></script>
+<script src="{% static 'uikit/2.23.0/js/components/tooltip.min.js' %}"></script>
 
 {% if step == 2%}
-<script type="text/javascript" src="{% static 'app/app.js' %}"></script>
+<script type="text/javascript" src="{% static 'app/ajax-notify.js' %}"></script>
+<script type="text/javascript" src="{% static 'app/app.js' %}?v=201511151104"></script>
 {% endif %}
 
 {% endblock %}

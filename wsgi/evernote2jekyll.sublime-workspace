@@ -4,6 +4,54 @@
 		"selected_items":
 		[
 			[
+				"time",
+				"timestamp"
+			],
+			[
+				"rend",
+				"render_to_response	function"
+			],
+			[
+				"github",
+				"github_store	statement"
+			],
+			[
+				"acc",
+				"access_token"
+			],
+			[
+				"temp",
+				"TemplateView	class"
+			],
+			[
+				"conte",
+				"context"
+			],
+			[
+				"gh_a",
+				"gh_access_token"
+			],
+			[
+				"get",
+				"get_context_data	function"
+			],
+			[
+				"cont",
+				"context	statement"
+			],
+			[
+				"User",
+				"UserProfile	class"
+			],
+			[
+				"wsgi",
+				"WSGI_DIR"
+			],
+			[
+				"access",
+				"access_token	statement"
+			],
+			[
 				"consum",
 				"consumer_key	statement"
 			],
@@ -22,10 +70,6 @@
 			[
 				"max",
 				"max_length"
-			],
-			[
-				"get",
-				"get_context_data	function"
 			],
 			[
 				"requ",
@@ -50,10 +94,6 @@
 			[
 				"app",
 				"app_protocol"
-			],
-			[
-				"time",
-				"timezone	module"
 			],
 			[
 				"auth",
@@ -352,10 +392,6 @@
 				"house__isnull"
 			],
 			[
-				"access",
-				"access_key	param"
-			],
-			[
 				"to",
 				"to_record	statement"
 			],
@@ -478,42 +514,6 @@
 			[
 				"Templa",
 				"TemplateAddView	class"
-			],
-			[
-				"Temp",
-				"template	module"
-			],
-			[
-				"Templ",
-				"Template	import"
-			],
-			[
-				"List",
-				"ListView	class"
-			],
-			[
-				"Template",
-				"Template	import"
-			],
-			[
-				"cRE",
-				"CreateView	class"
-			],
-			[
-				"view",
-				"View	class"
-			],
-			[
-				"moD",
-				"Model	class"
-			],
-			[
-				"resouce",
-				"resource_name	statement"
-			],
-			[
-				"resource",
-				"resource_file	statement"
 			]
 		]
 	},
@@ -582,21 +582,27 @@
 	},
 	"file_history":
 	[
-		"/Users/enix/Source/python/openshift/evnote2jekyll/wsgi/myproject/app/templates/app/console.html",
-		"/Users/enix/Source/python/openshift/evnote2jekyll/wsgi/myproject/app/templates/app/publish.html",
-		"/Users/enix/Source/python/openshift/evnote2jekyll/wsgi/myproject/myproject/urls.py",
-		"/Users/enix/Source/python/openshift/evnote2jekyll/wsgi/myproject/app/templates/registration/signon.html",
-		"/Users/enix/Source/python/openshift/evnote2jekyll/wsgi/myproject/app/models.py",
-		"/Users/enix/Source/python/openshift/evnote2jekyll/wsgi/myproject/app/templates/registration/login.html",
-		"/Users/enix/Source/python/openshift/evnote2jekyll/wsgi/myproject/myproject/settings.py",
-		"/Users/enix/Source/python/openshift/evnote2jekyll/wsgi/myproject/app/helper.py",
 		"/Users/enix/Source/python/openshift/evnote2jekyll/wsgi/myproject/app/views.py",
+		"/Users/enix/Source/python/openshift/evnote2jekyll/wsgi/myproject/app/templates/app/console.html",
+		"/Users/enix/Source/python/openshift/evnote2jekyll/wsgi/myproject/app/templates/base.html",
+		"/Users/enix/Source/python/openshift/evnote2jekyll/wsgi/static/uikit/2.23.0/js/components/notify.js",
+		"/Users/enix/Source/python/openshift/evnote2jekyll/wsgi/myproject/app/helper.py",
+		"/Users/enix/Source/python/openshift/evnote2jekyll/wsgi/myproject/app/githubapi/client.py",
+		"/Users/enix/Source/python/openshift/evnote2jekyll/wsgi/myproject/myproject/urls.py",
+		"/Users/enix/Source/python/openshift/evnote2jekyll/wsgi/myproject/app/models.py",
+		"/Users/enix/Source/python/openshift/evnote2jekyll/wsgi/static/app/app.js",
+		"/Users/enix/Source/python/openshift/evnote2jekyll/wsgi/myproject/app/templates/app/notebooks.html",
+		"/Users/enix/Source/python/openshift/evnote2jekyll/wsgi/myproject/myproject/settings.py",
+		"/Users/enix/Source/python/openshift/evnote2jekyll/wsgi/myproject/app/templates/app/auth.html",
+		"/Users/enix/Source/python/openshift/evnote2jekyll/wsgi/static/README",
+		"/Users/enix/Source/python/openshift/evnote2jekyll/wsgi/myproject/app/templates/app/publish.html",
+		"/Users/enix/Source/python/openshift/evnote2jekyll/wsgi/myproject/app/templates/registration/signon.html",
+		"/Users/enix/Source/python/openshift/evnote2jekyll/wsgi/myproject/app/templates/registration/login.html",
 		"/Users/enix/Source/python/openshift/evnote2jekyll/wsgi/myproject/app/templates/app/step1.html",
 		"/Users/enix/Source/python/openshift/evnote2jekyll/wsgi/myproject/app/templates/app/step2.html",
 		"/Users/enix/Source/python/openshift/evnote2jekyll/wsgi/myproject/app/templates/app/step3.html",
 		"/Users/enix/Source/python/openshift/evnote2jekyll/wsgi/myproject/app/templates/app/step4.html",
 		"/Users/enix/Source/python/openshift/evnote2jekyll/wsgi/myproject/app/templates/app/step5.html",
-		"/Users/enix/Source/python/openshift/evnote2jekyll/wsgi/myproject/app/templates/base.html",
 		"/Volumes/BOOTCAMP/Source/C/linux-4.2/arch/arm/net/bpf_jit_32.c",
 		"/Users/enix/Source/Packages/Keil/STM32F4xx_DFP/2.6.0/Projects/STM324x9I_EVAL/Examples/TIM/TIM_TimeBase/Src/main.c",
 		"/Users/enix/Source/c/SD-8686-FEDORA26FC6-SYSKT-GPL-9.70.3.p18-26409.P39_GPL/SD-8686-FEDORA26FC6-SYSKT-GPL-9.70.3.p18-26409.P39_GPL/src_sd8686/if/if_sdio/if_sdio.c",
@@ -703,13 +709,7 @@
 		"/Users/enix/Source/python/bae/repo/fotrend/app/urls.py",
 		"/Users/enix/Source/python/bae/repo/fotrend/app/views/error.py",
 		"/Users/enix/Source/python/bae/repo/fotrend/app/views/ad.py",
-		"/Users/enix/Source/python/bae/repo/fotrend/app/viewer_url.py",
-		"/Users/enix/Source/python/bae/repo/fotrend/requirements.txt",
-		"/Users/enix/Source/python/bae/repo/fotrend/assets/js/amazeui.min.js",
-		"/Users/enix/Source/python/bae/repo/fotrend/assets/js/amazeui.js",
-		"/Users/enix/Source/python/bae/repo/fotrend/assets/css/amazeui.css",
-		"/Users/enix/Source/python/bae/repo/fotrend/app/views/meta_data.py",
-		"/Users/enix/Source/python/bae/repo/fotrend/.gitignore"
+		"/Users/enix/Source/python/bae/repo/fotrend/app/viewer_url.py"
 	],
 	"find":
 	{
@@ -731,6 +731,12 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"data",
+			"format",
+			"session",
+			"close",
+			"session",
+			"client",
 			"LOGIN",
 			"SessionAuthenticationMiddleware",
 			"database",
@@ -852,13 +858,7 @@
 			"[Exception={e}]",
 			"'html.parser'",
 			"could",
-			"modal-loading",
-			"singlet",
-			"24",
-			"Shekou",
-			"shekou",
-			"_login",
-			"order"
+			"modal-loading"
 		],
 		"highlight": true,
 		"in_selection": false,
