@@ -1,0 +1,74 @@
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="description" content="">
+	<meta name="keywords" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>Jekynote - JS Test</title>
+    <!-- Fav icon -->
+    <link rel="shortcut icon" href="{% static 'favicon.ico' %}" type="image/x-icon">
+
+    <!-- Stylesheet -->
+	<link rel="stylesheet" href="../../../static/uikit/2.23.0/css/uikit.min.css" />
+	<link rel="stylesheet" href="../../../static/uikit/2.23.0/css/components/notify.min.css" />
+</head>
+
+<body>
+
+<div id="test-success"></div>
+<div id="test-failed"></div>
+
+<script src="../../../static/jquery/2.0.0/jquery.min.js"></script>
+<script src="../../../static/uikit/2.23.0/js/uikit.min.js"></script>
+<script src="../../../static/uikit/2.23.0/js/components/form-select.min.js"></script>
+<script src="../../../static/uikit/2.23.0/js/components/notify.min.js"></script>
+<script src="../../../static/app/ajax-notify.js"></script>
+<script type="text/javascript">
+	$(function(){
+		$tc1 = $('#test-success');
+		$tc2 = $('#test-failed');
+
+		function test_ajax_notifier_success(){
+			$tc1.ajaxNotifier({info: 'Loading test case 1...'});
+			$tc1.ajaxNotifier('call', 
+				{url: 'test.json', success: function(){
+					$tc1.html('Success');
+					$(document).dequeue();
+				},
+				error: function(){
+					$tc1.html('failed');
+				}
+			});
+		}
+
+		function test_ajax_notifier_failed(){
+			$tc2.ajaxNotifier({info: 'Loading test case 2...'});
+			$tc2.ajaxNotifier('call', 
+				{url: 'test1.json', success: function(){
+					$tc2.html('Success');					
+				},
+				error: function(){
+					$tc2.html('failed');
+				},
+				complete: function(){
+					$(document).dequeue();
+				}
+			});
+		}	
+
+		$(document).queue(test_ajax_notifier_success);
+		$(document).queue(test_ajax_notifier_failed);
+
+		$(document).dequeue();
+
+		/*var notifier = UIkit.notify('hi');
+		setTimeout(function() {
+			notifier.content('world');
+		}, 1000);*/		
+	});	
+</script>
+
+</body>
+
+</html>
