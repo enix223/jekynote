@@ -7,7 +7,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django import forms
 from django.core.urlresolvers import reverse
 from django.http import HttpResponse
-from django.shortcuts import render_to_response
+from django.shortcuts import render_to_response, redirect
 
 from evernote.edam.notestore.ttypes import NoteFilter, NotesMetadataResultSpec
 from app.models import UserProfile
@@ -124,32 +124,29 @@ class EvernoteAuthView(TemplateView):
     def dispatch(self, *args, **kwargs):
         return super(EvernoteAuthView, self).dispatch(*args, **kwargs)
 
-    def get_context_data(self, **kwargs):
+    def get(self, request, *args, **kwargs):
         # Get the access token from call back url param
-        context = super(EvernoteAuthView, self).get_context_data(**kwargs)
-        req_token = self.request.session.get('en_req_token', '')
+        req_token = request.session.get('en_req_token', '')
         if req_token:
             client = helper.get_evernote_client()
             access_token = client.get_access_token(
               req_token['oauth_token'],
               req_token['oauth_token_secret'],
-              self.request.GET.get('oauth_verifier', '')
+              request.GET.get('oauth_verifier', '')
             )
-            del self.request.session['en_req_token']
+            del request.session['en_req_token']
 
         # Save the access token to UserProfile model
         try:
-            profile = UserProfile.objects.get(user=self.request.user)
+            profile = UserProfile.objects.get(user=request.user)
             profile.en_access_token = access_token
             profile.save()
         except UserProfile.DoesNotExist:
             profile = UserProfile.objects.create(
-                user=self.request.user,
+                user=request.user,
                 en_access_token=access_token)
 
-        context['profile'] = profile
-        context['step'] = 1
-        return context
+        return redirect('console')
 
 
 class GithubAuthView(TemplateView):
@@ -160,28 +157,31 @@ class GithubAuthView(TemplateView):
     def dispatch(self, *args, **kwargs):
         return super(GithubAuthView, self).dispatch(*args, **kwargs)
 
-    def get_context_data(self, **kwargs):
+    def get(self, request, *args, **kwargs):
         # Get the access token from call back url param
-        context = super(GithubAuthView, self).get_context_data(**kwargs)
+        callback_url = '{app_protocol}://{app_domain}{app_url}'.format(
+            app_protocol=request.META['wsgi.url_scheme'],
+            app_domain=request.META['HTTP_HOST'],
+            app_url=reverse('github-auth'),
+        )
+
         client = helper.get_github_client()
         access_token = client.get_access_token(
-            self.request.GET.get('code', ''),
-            reverse('github-auth')
+            request.GET.get('code', ''),
+            callback_url
         )
 
         # Save the access token to UserProfile model
         try:
-            profile = UserProfile.objects.get(user=self.request.user)
+            profile = UserProfile.objects.get(user=request.user)
             profile.gh_access_token = access_token
             profile.save()
         except UserProfile.DoesNotExist:
             profile = UserProfile.objects.create(
-                user=self.request.user,
-                en_access_token=access_token)
+                user=request.user,
+                gh_access_token=access_token)
 
-        context['profile'] = profile
-        context['step'] = 1
-        return context
+        return redirect('console')
 
 
 class PublishView(TemplateView):

@@ -39,7 +39,6 @@ class GithubClient(object):
                     'redirect_uri': redirect_uri
                 }),
                 headers=header,
-                timeout=5,
             )
             access_token = dict(json.loads(resp.content))
             self.token = access_token['access_token']
