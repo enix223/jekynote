@@ -17,7 +17,8 @@ from django.conf.urls import include, url
 from django.contrib import admin
 from app.views import SignonView, EvernoteAuthView, GithubAuthView
 from app.views import GetNotebooksView, ConsoleView, GetNotesView
-from app.views import GetRepoView, PublishView
+from app.views import GetRepoView, PublishView, SyncView
+from django.views.decorators.csrf import csrf_exempt
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
@@ -26,6 +27,7 @@ urlpatterns = [
     url(r'^evernote-auth/$', EvernoteAuthView.as_view(), name='evernote-auth'),
     url(r'^github-auth/$', GithubAuthView.as_view(), name='github-auth'),
     url(r'^publish/$', PublishView.as_view(), name='publish'),
+    url(r'^sync/$', csrf_exempt(SyncView.as_view()), name='sync'),
     url(r'^notebooks/$', GetNotebooksView.as_view(), name='notebooks'),
     url(r'^notebooks/(?P<notebook>[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})/notes/$',
         GetNotesView.as_view(), name='notes'),

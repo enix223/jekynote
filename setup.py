@@ -18,15 +18,15 @@ setup(
     # GETTING-STARTED: define required django version:
     install_requires=[
         'Django==1.6',
-	'beautifulsoup4',
-	'evernote',
-	'html2text',
-	'MySQL-python==1.2.5',
-	'oauth2==1.9.0.post1',
-	'pygithub',
-	'requests==2.8.1',
-	'six==1.10.0',
-	'South'
+        'beautifulsoup4',
+        'evernote',
+        'html2text',
+        'MySQL-python==1.2.5',
+        'oauth2==1.9.0.post1',
+        'pygithub',
+        'requests==2.8.1',
+        'six==1.10.0',
+        'South'
     ],
     dependency_links=[
         'https://pypi.python.org/simple/django/'

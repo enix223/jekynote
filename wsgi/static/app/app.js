@@ -2,6 +2,7 @@ $(function(){
 
 	var $template = $('#table-notes-tmpl'),	
 		$selectNotebook = $('#select-notebook'),
+		$selectRepo = $('#select-repo'),
 		$btnPublish = $('#btn-publish'),	
 		$btnSelectAll = $('#btn-select-all'),
 		$ckbSelectAll = $('#ckb-select-all'),
@@ -23,17 +24,33 @@ $(function(){
 		  * @retval None
 		  */
 		$fnPublish = function(){
+			var url = '/sync/'
 			$fnWidgetStatusSet(true); // disable the publish button
-			var noteList = [];
+			var idx = 0, prefix = 'form-'
+			var data = {
+				'form-TOTAL_FORMS': String($('input[data-note-id]:checked').length), // Total forms
+				'form-INITIAL_FORMS': '0',
+				'form-MAX_NUM_FORMS': ''
+			}
 			$('input[data-note-id]:checked').each(function(){
-				var pair = {
-					note_guid: $(this).data('note-id'),
-					title: $('input[data-title-id=' + $(this).data('note-id') + ']').val()
-				}
-				noteList.push(pair);
+				data[prefix + String(idx) + '-note_guid'] = $(this).data('note-id'),                                      // Note GUID
+				data[prefix + String(idx) + '-title'] = $('input[data-title-id=' + $(this).data('note-id') + ']').val(),  // Markdown file name
+				data[prefix + String(idx) + '-repo'] = $selectRepo.val(),                                                 // Repo 
+				data[prefix + String(idx) + '-message'] = 'Jekynote synchornize'                                          // Commit message
 			});
-			console.log(noteList);
-			$fnWidgetStatusSet(false); // enable the publish button
+			
+			$ajaxnotifier.ajaxNotifier({timeout: 0});
+			$ajaxnotifier.ajaxNotifier('call', {
+				url: url,
+				type: 'POST',
+				data: data,
+				success: function(data){
+
+				},
+				complete: function(){
+					$fnWidgetStatusSet(false); // enable the publish button
+				}
+			});			
 		}
 		/**
 		  * @breif  Select and de-select all note function

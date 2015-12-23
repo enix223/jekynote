@@ -9,7 +9,7 @@
 <div class="uk-grid">
 	<div class="uk-width-medium-3-10 uk-container-center">
 		<div class="uk-panel">
-			<h3 class="uk-panel-title">Signon</h3>
+			<h3 class="uk-panel-title"><i class="uk-icon-user-plus"></i> Signon</h3>
 			<hr>
 			<form class="uk-form uk-form-horizontal" action="#"  method="POST">
 				
@@ -26,25 +26,34 @@
 				<fieldset>
 					{% csrf_token %}
 					<div class="uk-form-row">
-						<label class="uk-form-label" for="username">Username/Email</label>
-						<input class="uk-width-medium-1-1 uk-form-control" name="username" 
-							type="email" placeholder="Your@email.address">
+						<label class="uk-form-label" for="username">Email</label>
+						<div class="uk-form-icon uk-width-medium-1-1 ">
+							<i class="uk-icon-user"></i>
+							<input class="uk-width-medium-1-1 uk-form-control" name="username" 
+								type="email">
+						</div>
 						<div class="uk-text-danger">{{ form.username.errors|striptags }}</div>
 					</div>
 					<div class="uk-form-row">
 						<label class="uk-form-label" for="password">Password</label>
-						<input class="uk-width-medium-1-1 uk-form-control" name="password1" 
-							type="password" placeholder="password">
+						<div class="uk-form-icon uk-width-medium-1-1 ">
+							<i class="uk-icon-key"></i>
+							<input class="uk-width-medium-1-1 uk-form-control" name="password1" 
+								type="password">
+						</div>
 						<div class="uk-text-danger">{{ form.password1.errors|striptags }}</div>
 					</div>
 					<div class="uk-form-row">
 						<label class="uk-form-label" for="password">Confirm Password</label>
-						<input class="uk-width-medium-1-1 uk-form-control" name="password2" 
-							type="password" placeholder="confirm password">
+						<div class="uk-form-icon uk-width-medium-1-1 ">
+							<i class="uk-icon-key"></i>
+							<input class="uk-width-medium-1-1 uk-form-control" name="password2" 
+								type="password">
+						</div>
 						<div class="uk-text-danger">{{ form.password2.errors|striptags }}</div>
 					</div>
 					<div class="uk-form-row">
-						<button class="uk-button uk-button-success">Create Account</button>
+						<button class="uk-button uk-button-success"><i class="uk-icon-user-plus"></i> Create Account</button>
 					</div>
 				</fieldset>
 			</form>

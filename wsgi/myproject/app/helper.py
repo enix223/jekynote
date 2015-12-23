@@ -3,6 +3,7 @@ from django.conf import settings
 from evernote.api.client import EvernoteClient
 from githubapi.client import GithubClient
 import html2text
+from bs4 import BeautifulSoup
 import time
 
 
@@ -35,18 +36,14 @@ def get_current_timestamp():
     return int(time.mktime(now().timetuple()))
 
 
-class ENMLParser(object):
-    def enml_to_markdown(content):
-        content = content.replace(
-            r'<\?xml[^>]*>', ''
-          ).replace(
-            r'<!(--)?\[CDATA[^>]*>', ''
-          ).replace(
-            r'<!DOCTYPE[^>]*>', ''
-          ).replace(
-            r'<en-note[^>]*>'
-          ).replace(
-            r'<\/en-note>', ''
-          ).replace(
-            r']](--)?>'
-          )
+def enml_to_markdown(content, media_path):
+    # Replace image tag to a link
+    note = BeautifulSoup(content).select('en-note')[0]
+    html = str(note)
+    for media in note.select('en-media'):
+        name = media.attrs['hash']
+        resType = media.attrs['type'].split('/')[1]
+        img = '<img alt="{}" src="{}/{}.{}"/>'.format(name, media_path, name, resType)
+        html = html.replace(str(media), img)
+
+    return html2text.html2text(html.decode('utf-8'))

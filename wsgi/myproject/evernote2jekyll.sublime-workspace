@@ -4,6 +4,46 @@
 		"selected_items":
 		[
 			[
+				"acc",
+				"en_access_token"
+			],
+			[
+				"render",
+				"render_to_json_response	function"
+			],
+			[
+				"get_",
+				"get_evernote_client	function"
+			],
+			[
+				"rende",
+				"render_to_json_response	function"
+			],
+			[
+				"SyncFor",
+				"SyncFormSet	statement"
+			],
+			[
+				"Sync",
+				"SyncForm	class"
+			],
+			[
+				"formset",
+				"formset_factory	function"
+			],
+			[
+				"JSON",
+				"JSONResponseMixin	class"
+			],
+			[
+				"uk-margin-",
+				"uk-margin-small-top"
+			],
+			[
+				"re",
+				"redirect	function"
+			],
+			[
 				"data",
 				"data-note-id"
 			],
@@ -22,10 +62,6 @@
 			[
 				"temp",
 				"template	module"
-			],
-			[
-				"render",
-				"render_to_response	function"
 			],
 			[
 				"uk-form",
@@ -102,10 +138,6 @@
 			[
 				"github",
 				"github_store	statement"
-			],
-			[
-				"acc",
-				"access_token"
 			],
 			[
 				"gh_a",
@@ -482,72 +514,24 @@
 			[
 				"THUMB",
 				"THUMBNAIL_SIZE"
-			],
-			[
-				"thum",
-				"thumbnail"
-			],
-			[
-				"create",
-				"create_thumbnail	function"
-			],
-			[
-				"Upd",
-				"UpdateThumbnailForm	class"
-			],
-			[
-				"def",
-				"default_storage	statement"
-			],
-			[
-				"hous",
-				"houses	statement"
-			],
-			[
-				"Hou",
-				"House	class"
-			],
-			[
-				"w",
-				"wrapper"
-			],
-			[
-				"grid",
-				"grid-item"
 			]
 		]
 	},
 	"buffers":
 	[
 		{
-			"file": "/Users/enix/Source/python/openshift/evnote2jekyll/wsgi/static/app/app.js",
-			"settings":
-			{
-				"buffer_size": 4861,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "app/templates/app/console.html",
-			"settings":
-			{
-				"buffer_size": 2320,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "app/templates/app/notebooks.html",
-			"settings":
-			{
-				"buffer_size": 2927,
-				"line_ending": "Unix"
-			}
-		},
-		{
 			"file": "app/views.py",
 			"settings":
 			{
-				"buffer_size": 10794,
+				"buffer_size": 14013,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/Users/enix/Source/python/openshift/evnote2jekyll/wsgi/static/app/app.js",
+			"settings":
+			{
+				"buffer_size": 5354,
 				"line_ending": "Unix"
 			}
 		}
@@ -615,42 +599,36 @@
 	"expanded_folders":
 	[
 		"/Users/enix/Source/python/openshift/evnote2jekyll/wsgi",
-		"/Users/enix/Source/python/openshift/evnote2jekyll/wsgi/log",
 		"/Users/enix/Source/python/openshift/evnote2jekyll/wsgi/myproject",
 		"/Users/enix/Source/python/openshift/evnote2jekyll/wsgi/myproject/app",
-		"/Users/enix/Source/python/openshift/evnote2jekyll/wsgi/myproject/app/templates",
-		"/Users/enix/Source/python/openshift/evnote2jekyll/wsgi/myproject/app/templates/app",
-		"/Users/enix/Source/python/openshift/evnote2jekyll/wsgi/myproject/test/js",
+		"/Users/enix/Source/python/openshift/evnote2jekyll/wsgi/myproject/app/githubapi",
+		"/Users/enix/Source/python/openshift/evnote2jekyll/wsgi/myproject/myproject",
 		"/Users/enix/Source/python/openshift/evnote2jekyll/wsgi/static",
-		"/Users/enix/Source/python/openshift/evnote2jekyll/wsgi/static/app",
-		"/Users/enix/Source/python/openshift/evnote2jekyll/wsgi/static/uikit",
-		"/Users/enix/Source/python/openshift/evnote2jekyll/wsgi/static/uikit/2.23.0",
-		"/Users/enix/Source/python/openshift/evnote2jekyll/wsgi/static/uikit/2.23.0/js",
-		"/Users/enix/Source/python/openshift/evnote2jekyll/wsgi/static/uikit/2.23.0/js/components"
+		"/Users/enix/Source/python/openshift/evnote2jekyll/wsgi/static/app"
 	],
 	"file_history":
 	[
-		"/Users/enix/Source/python/openshift/evnote2jekyll/wsgi/log/django.log",
+		"/Users/enix/Source/python/openshift/evnote2jekyll/wsgi/static/app/app.js",
+		"/Users/enix/Source/python/openshift/evnote2jekyll/wsgi/myproject/app/templates/app/notebooks.html",
 		"/Users/enix/Source/python/openshift/evnote2jekyll/wsgi/static/app/ajax-notify.js",
-		"/Users/enix/Source/python/openshift/evnote2jekyll/wsgi/static/uikit/2.23.0/js/components/notify.js",
-		"/Users/enix/Source/python/openshift/evnote2jekyll/wsgi/myproject/myproject/settings.py",
+		"/Users/enix/Source/python/openshift/evnote2jekyll/wsgi/myproject/myproject/urls.py",
 		"/Users/enix/Source/python/openshift/evnote2jekyll/wsgi/myproject/app/helper.py",
+		"/Users/enix/Source/python/openshift/evnote2jekyll/wsgi/myproject/app/githubapi/client.py",
+		"/Users/enix/Source/python/openshift/evnote2jekyll/wsgi/myproject/myproject/settings.py",
+		"/Users/enix/Source/python/openshift/evnote2jekyll/wsgi/myproject/app/models.py",
+		"/Users/enix/Source/python/openshift/evnote2jekyll/wsgi/myproject/app/templates/app/auth.html",
 		"/Users/enix/Source/python/openshift/evnote2jekyll/wsgi/myproject/app/templates/app/console.html",
 		"/Users/enix/Source/python/openshift/evnote2jekyll/wsgi/myproject/app/views.py",
-		"/Users/enix/Source/python/openshift/evnote2jekyll/wsgi/myproject/app/templates/app/notebooks.html",
+		"/Users/enix/Source/python/openshift/evnote2jekyll/wsgi/log/django.log",
+		"/Users/enix/Source/python/openshift/evnote2jekyll/wsgi/static/uikit/2.23.0/js/components/notify.js",
 		"/Users/enix/Source/python/openshift/evnote2jekyll/wsgi/myproject/test/js/test-ajax-notify.html",
 		"/Users/enix/Source/python/openshift/evnote2jekyll/wsgi/myproject/app/templates/base.html",
-		"/Users/enix/Source/python/openshift/evnote2jekyll/wsgi/static/app/app.js",
 		"/Users/enix/Source/python/openshift/evnote2jekyll/wsgi/static/uikit/2.23.0/js/components/form-select.js",
-		"/Users/enix/Source/python/openshift/evnote2jekyll/wsgi/myproject/myproject/urls.py",
 		"/Users/enix/Source/python/openshift/evnote2jekyll/wsgi/myproject/test/js/test.json",
 		"/Users/enix/Source/python/openshift/evnote2jekyll/wsgi/myproject/app/templates/includes/navbar.html",
 		"/Users/enix/Source/python/openshift/evnote2jekyll/wsgi/myproject/app/templatetags/mytag.py",
-		"/Users/enix/Source/python/openshift/evnote2jekyll/wsgi/myproject/app/githubapi/client.py",
 		"/Users/enix/Source/python/openshift/evnote2jekyll/wsgi/static/uikit/2.23.0/css/uikit.docs.min.css",
 		"/Users/enix/Source/python/openshift/evnote2jekyll/wsgi/myproject/app/templatetags/__init__.py",
-		"/Users/enix/Source/python/openshift/evnote2jekyll/wsgi/myproject/app/models.py",
-		"/Users/enix/Source/python/openshift/evnote2jekyll/wsgi/myproject/app/templates/app/auth.html",
 		"/Users/enix/Source/python/openshift/evnote2jekyll/wsgi/static/README",
 		"/Users/enix/Source/python/openshift/evnote2jekyll/wsgi/myproject/app/templates/app/publish.html",
 		"/Users/enix/Source/python/openshift/evnote2jekyll/wsgi/myproject/app/templates/registration/signon.html",
@@ -779,6 +757,7 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"gh_auth_url",
 			"fnCheckUncheckAll",
 			"fnWidgetRevert",
 			"$fnWidgetRevert();",
@@ -905,8 +884,7 @@
 			"auto",
 			"cancel",
 			"queue",
-			"image-list",
-			"image"
+			"image-list"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -963,106 +941,19 @@
 			[
 				{
 					"buffer": 0,
-					"file": "/Users/enix/Source/python/openshift/evnote2jekyll/wsgi/static/app/app.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 4861,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1159,
-								1159
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 261.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 0,
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "app/templates/app/console.html",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 2320,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1296,
-								1296
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/HTML/HTML.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 144.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 2,
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "app/templates/app/notebooks.html",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 2927,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								2309,
-								2309
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/HTML/HTML.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 603.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 1,
-					"type": "text"
-				},
-				{
-					"buffer": 3,
 					"file": "app/views.py",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 10794,
+						"buffer_size": 14013,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								813,
-								813
+								13652,
+								13652
 							]
 						],
 						"settings":
@@ -1072,10 +963,39 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 168.0,
+						"translation.y": 5402.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 3,
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "/Users/enix/Source/python/openshift/evnote2jekyll/wsgi/static/app/app.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 5354,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 335.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
 					"type": "text"
 				}
 			]
@@ -1162,7 +1082,7 @@
 	"show_open_files": false,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 319.0,
+	"side_bar_width": 236.0,
 	"status_bar_visible": true,
 	"template_settings":
 	{

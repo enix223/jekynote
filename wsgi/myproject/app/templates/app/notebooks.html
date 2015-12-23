@@ -5,7 +5,7 @@
 	</div>
 	{% else %}
 	<div class="uk-width-medium-5-10">
-		<div class="uk-panel uk-panel-box uk-panel-secondary">
+		<div class="uk-panel uk-panel-box uk-panel-secondary uk-margin-bottom">
 			<h3 class="uk-panel-title"><i class="uk-icon-book"></i> Your Evernote notebooks</h3>
 			<div class="uk-button uk-form-select" data-uk-form-select id="form-select-notebooks">
 				<span></span>
@@ -16,7 +16,7 @@
 	</div>
 
 	<div class="uk-width-medium-5-10">
-		<div class="uk-panel uk-panel-box uk-panel-secondary">
+		<div class="uk-panel uk-panel-box uk-panel-secondary ">
 			<h3 class="uk-panel-title"><i class="uk-icon-github"></i> Your Jekyll repo</h3>
 			<div class="uk-button uk-form-select" id="form-select-repo" data-uk-form-select>
 				<span></span>
@@ -64,6 +64,9 @@
 						</div>
 					</div>
   				</div>
+  				<div class="uk-width-1-1 uk-margin-small-top" data-message-id="{{$value.guid}}">
+  					<p class="uk-text-danger"></p>
+  				</div>
   			</div>
 		</li>
 		{{/each}}
@@ -72,7 +75,7 @@
 	<!-- Github repo -->
 	<script type="text/html" id="repo-tmpl">
 		{{each list}}
-		<option value="{{$value.id}}">{{$value.name}}</option>
+		<option value="{{$value.name}}">{{$value.name}}</option>
 		{{/each}}
 	</script>
 

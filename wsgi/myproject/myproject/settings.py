@@ -137,7 +137,7 @@ else:
 
 # Web site title
 WEBSITE_TITLE = 'Jekynote'
-WEBSITE_SOLOGAN = 'Publish your notes to jekyll site'
+WEBSITE_SOLOGAN = 'Publish your evernotes to jekyll site'
 
 # Login settings
 LOGIN_URL = '/login/'

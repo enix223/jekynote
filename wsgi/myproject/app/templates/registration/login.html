@@ -9,7 +9,7 @@
 <div class="uk-grid">
 	<div class="uk-width-medium-3-10 uk-container-center">
 		<div class="uk-panel">
-			<h3 class="uk-panel-title">Login</h3>
+			<h3 class="uk-panel-title"><i class="uk-icon-sign-in"></i> Login</h3>
 			<hr>
 			
 			<form class="uk-form uk-form-horizontal" action="#"  method="POST">
@@ -26,18 +26,24 @@
 					{% csrf_token %}
 					<div class="uk-form-row">
 						<label class="uk-form-label" for="username">Username</label>
-						<input class="uk-width-medium-1-1 uk-form-control" name="username" 
-							type="email" placeholder="Your@email.address">
+						<div class="uk-form-icon uk-width-medium-1-1 ">
+    						<i class="uk-icon-user"></i>
+							<input class="uk-form-control uk-width-medium-1-1" name="username" 
+								type="email" >
+						</div>
 						<div class="uk-text-danger">{{ form.errors.username|striptags }}</div>
 					</div>
 					<div class="uk-form-row">
 						<label class="uk-form-label" for="password">Password</label>
-						<input class="uk-width-medium-1-1 uk-form-control" name="password" 
-							type="password" placeholder="Your Password">
+						<div class="uk-form-icon uk-width-medium-1-1 ">
+							<i class="uk-icon-key"></i>
+							<input class="uk-width-medium-1-1 uk-form-control" name="password" 
+								type="password">
+						</div>
 						<div class="uk-text-danger">{{ form.errors.password|striptags }}</div>
 					</div>
 					<div class="uk-form-row">
-						<button class="uk-button uk-button-success">Login</button>
+						<button class="uk-button uk-button-success"><i class="uk-icon-sign-in"></i> Login</button>
 					</div>					
 				</fieldset>
 			</form>
