@@ -26,7 +26,8 @@ setup(
         'pygithub',
         'requests==2.8.1',
         'six==1.10.0',
-        'South'
+        'South',
+        'PyYAML==3.11'
     ],
     dependency_links=[
         'https://pypi.python.org/simple/django/'
