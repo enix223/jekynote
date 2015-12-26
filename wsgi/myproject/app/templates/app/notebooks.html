@@ -46,7 +46,7 @@
 		{{each list}}		
 		<li>
 			<div class="uk-grid uk-margin-small-top">
-				<div class="uk-width-medium-1-2">					
+				<div class="uk-width-small-1-1 uk-width-medium-3-6">					
 					<h3 class="uk-margin-small-bottom">
 						<input type="checkbox" data-note-id="{{$value.guid}}" /> {{$value.title}}
 					</h3>
@@ -54,13 +54,21 @@
 						Last update: 
 						<i class="uk-icon-clock-o"></i> {{$value.updated | dateFormat:"yyyy-MM-dd hh:mm:ss"}}</span>
 				</div>
-				<div class="uk-width-medium-1-2">
+				<div class="uk-width-small-1-1 uk-width-medium-2-6">
 					<div class="uk-form-row">
 						<label class="uk-form-label uk-text-muted" style="font-weight: normal">Markdown file name</label>
 						<div class="uk-form-controls">
 							<input type="text" class="uk-width-1-1 uk-form-blank" data-title-id="{{$value.guid}}"
 								value="{{$value.created | dateFormat:'yyyy-MM-dd'}}-your-file-name.md"
 								{{if $index==0}}data-uk-tooltip="{pos: 'left'}" title="Give it a name"{{/if}} />
+						</div>
+					</div>
+  				</div>
+  				<div class="uk-width-small-1-1 uk-width-medium-1-6">
+					<div class="uk-form-row">
+						<label class="uk-form-label uk-text-muted" style="font-weight: normal">Status</label>
+						<div class="uk-form-controls" id="status-{{$value.guid}}">
+							
 						</div>
 					</div>
   				</div>

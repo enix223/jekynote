@@ -4,9 +4,9 @@ from setuptools import setup
 
 setup(
     # GETTING-STARTED: set your app name:
-    name='evnote2jekyll',
+    name='jekynote',
     # GETTING-STARTED: set your app version:
-    version='1.0',
+    version='1.1.0',
     # GETTING-STARTED: set your app description:
     description='Integrate Evernote with jekyll blog site',
     # GETTING-STARTED: set author name (your name):
@@ -30,6 +30,7 @@ setup(
         'PyYAML==3.11'
     ],
     dependency_links=[
-        'https://pypi.python.org/simple/django/'
+        'https://pypi.python.org/simple/django/',
+        'https://github.com/enix223/PyGithub',
     ],
 )

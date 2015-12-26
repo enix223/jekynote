@@ -26,31 +26,34 @@ $(function(){
 		$fnPublish = function(){
 			var url = '/sync/'
 			$fnWidgetStatusSet(true); // disable the publish button
-			var idx = 0, prefix = 'form-'
-			var data = {
-				'form-TOTAL_FORMS': String($('input[data-note-id]:checked').length), // Total forms
-				'form-INITIAL_FORMS': '0',
-				'form-MAX_NUM_FORMS': ''
-			}
+			// var idx = 0, prefix = 'form-'
+			// var data = {
+			// 	'form-TOTAL_FORMS': String($('input[data-note-id]:checked').length), // Total forms
+			// 	'form-INITIAL_FORMS': '0',
+			// 	'form-MAX_NUM_FORMS': ''
+			// }
+			data = {};
 			$('input[data-note-id]:checked').each(function(){
-				data[prefix + String(idx) + '-note_guid'] = $(this).data('note-id'),                                      // Note GUID
-				data[prefix + String(idx) + '-title'] = $('input[data-title-id=' + $(this).data('note-id') + ']').val(),  // Markdown file name
-				data[prefix + String(idx) + '-repo'] = $selectRepo.val(),                                                 // Repo 
-				data[prefix + String(idx) + '-message'] = 'Jekynote synchornize'                                          // Commit message
-			});
-			
-			$ajaxnotifier.ajaxNotifier({timeout: 0});
-			$ajaxnotifier.ajaxNotifier('call', {
-				url: url,
-				type: 'POST',
-				data: data,
-				success: function(data){
+				// data[prefix + String(idx) + '-note_guid'] = $(this).data('note-id'),                                      // Note GUID
+				// data[prefix + String(idx) + '-title'] = $('input[data-title-id=' + $(this).data('note-id') + ']').val(),  // Markdown file name
+				// data[prefix + String(idx) + '-repo'] = $selectRepo.val(),                                                 // Repo 
+				// data[prefix + String(idx) + '-message'] = 'Jekynote synchornize'                                          // Commit message
+				var note_guid = $(this).data('note-id');
+				data['note_guid'] = $(this).data('note-id');                                      // Note GUID
+				data['title'] = $('input[data-title-id=' + $(this).data('note-id') + ']').val();  // Markdown file name
+				data['repo'] = $selectRepo.val();                                                 // Repo 
+				data['message'] = 'Jekynote synchornize';                                         // Commit message
 
-				},
-				complete: function(){
-					$fnWidgetStatusSet(false); // enable the publish button
-				}
-			});			
+				$.ajax({
+					url: url,
+					type: 'POST',
+					data: data
+				}).done(function(){
+					$('#status-' + note_guid).html("<i class='uk-icon-check-circle'></i>");
+				}).fail(function(){
+					$('#status-' + note_guid).html("<i class='uk-icon-times-circle'></i>");
+				});
+			});
 		}
 		/**
 		  * @breif  Select and de-select all note function

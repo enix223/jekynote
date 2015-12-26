@@ -340,9 +340,8 @@ class SyncView(JSONResponseMixin, TemplateView):
         return super(SyncView, self).dispatch(*args, **kwargs)
 
     def post(self, request, *args, **kwargs):
-        SyncFormSet = forms.formsets.formset_factory(SyncForm)
-        formset = SyncFormSet(request.POST)
-        if formset.is_valid():
+        form = SyncForm(request.POST)
+        if form.is_valid():
             try:
                 profile = UserProfile.objects.get(user=request.user)
             except UserProfile.DoesNotExist:
@@ -360,7 +359,7 @@ class SyncView(JSONResponseMixin, TemplateView):
             # step. 0 Read the config.yml file to get the post path and media path
             gh_client = helper.get_github_client(profile.gh_access_token)
             gh_store = gh_client.get_github_store()
-            repo = gh_store.get_user().get_repo(formset[0].cleaned_data['repo'])
+            repo = gh_store.get_user().get_repo(form.cleaned_data['repo'])
 
             try:
                 _config = yaml.load(repo.get_contents('_config.yml').decoded_content)
@@ -368,55 +367,55 @@ class SyncView(JSONResponseMixin, TemplateView):
                 media_path = _config['prose']['media']
             except:
                 return self.render_to_json_response(
-                    {'rc': -5, 'message': 'Read _config.yml failed'})
+                    {'rc': -5, 'message': '_config.yml not found or not correct.'})
 
-            for form in formset:
-                # step.1 Get the note from API
-                try:
-                    note_guid = form.cleaned_data['note_guid']
-                    client = helper.get_evernote_client(
-                        profile.en_access_token)
-                    note_store = client.get_note_store()
-                    note = note_store.getNote(
-                        profile.en_access_token,  # authenticationToken
-                        note_guid,                # guid
-                        True,                     # withContent
-                        True,                     # withResourcesData
-                        True,                     # withResourcesRecognition
-                        True,                     # withResourcesAlternateData
-                    )
-                except Exception, e:
-                    return self.render_to_json_response(
-                        {'rc': -4, 'message': str(e)})
+            # step.1 Get the note from API
+            try:
+                note_guid = form.cleaned_data['note_guid']
+                client = helper.get_evernote_client(
+                    profile.en_access_token)
+                note_store = client.get_note_store()
+                note = note_store.getNote(
+                    profile.en_access_token,  # authenticationToken
+                    note_guid,                # guid
+                    True,                     # withContent
+                    True,                     # withResourcesData
+                    True,                     # withResourcesRecognition
+                    True,                     # withResourcesAlternateData
+                )
+            except Exception, e:
+                return self.render_to_json_response(
+                    {'rc': -4, 'message': str(e)})
 
-                # step.2 Commit the data to Github repo
-                md = helper.enml_to_markdown(note.content, media_path)
+            # step.2 Commit the data to Github repo
+            md = helper.enml_to_markdown(note.content, media_path)
 
-                # TODO Commit the file to the specify repo (create or update)
-                # TODO Use config.yaml settings to locate what is the post path
-                path = '/{}/{}'.format(post_path, form.cleaned_data['title'])
+            # TODO Commit the file to the specify repo (create or update)
+            # TODO Use config.yaml settings to locate what is the post path
+            path = '/{}/{}'.format(post_path, form.cleaned_data['title'])
 
-                import pdb
-                pdb.set_trace()
+            import pdb
+            pdb.set_trace()
 
-                try:
-                    content = repo.get_contents(path)
-                    # File exist, so replace it
-                    repo.update_file(
-                        path,
-                        form.cleaned_data['message'],
-                        bytes(md.encode('utf-8')),
-                        content.sha
-                    )
-                except:
-                    # File not exist, so create it
-                    repo.create_file(
-                        path,
-                        form.cleaned_data['message'],
-                        bytes(md.encode('utf-8'))
-                    )
+            try:
+                content = repo.get_contents(path)
+                # File exist, so replace it
+                repo.update_file(
+                    path,
+                    form.cleaned_data['message'],
+                    bytes(md.encode('utf-8')),
+                    content.sha
+                )
+            except:
+                # File not exist, so create it
+                repo.create_file(
+                    path,
+                    form.cleaned_data['message'],
+                    bytes(md.encode('utf-8'))
+                )
 
-                # step.3 Commit the resources to Github repo
+            # step.3 Commit the resources to Github repo
+            if note.resources:
                 for resource in note.resources:
                     # TODO Use config.yaml settings to find out the media path
                     path = '/{}/{}.{}'.format(
@@ -434,7 +433,9 @@ class SyncView(JSONResponseMixin, TemplateView):
                     except:
                         # File not exist, so create it
                         repo.create_file(
-                            path, form.cleaned_data['message'], resource.data)
+                            path, form.cleaned_data['message'],
+                            resource.data
+                        )
         else:
             return self.render_to_json_response({
                 'rc': -1, 'message': 'Submit form not valid'})
