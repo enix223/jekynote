@@ -144,8 +144,14 @@ LOGIN_URL = '/login/'
 LOGIN_REDIRECT_URL = '/console/'
 
 # Evernote related Constant
-EVERNOTE_CUSUMER_KEY = 'enixyu'
-EVERNOTE_CUSUMER_SECRET = 'd1a2d1b3f1940d51'
+if DEBUG:
+    # Development
+    EVERNOTE_CUSUMER_KEY = 'enixyu'
+    EVERNOTE_CUSUMER_SECRET = 'd1a2d1b3f1940d51'
+else:
+    # Production
+    EVERNOTE_CUSUMER_KEY = 'enix223-3994'
+    EVERNOTE_CUSUMER_SECRET = '8f6a8c2722accfbe'
 EVERNOTE_DEVELOPER_TOKEN = 'S=s1:U=91a6c:E=1583dbbcf62:C=150e60aa220:P=1cd:A=en-devtoken:V=2:H=becbc7f5f84b6913279853e65381ddef'
 
 # GITHUB related constant
