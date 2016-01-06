@@ -7,6 +7,8 @@ import sys
 os.environ['DJANGO_SETTINGS_MODULE'] = 'myproject.settings'
 ## GETTING-STARTED: make sure the next line points to your django project dir:
 sys.path.append(os.path.join(os.environ['OPENSHIFT_REPO_DIR'], 'wsgi', 'myproject'))
+## My own packages
+sys.path.append(os.path.join(os.environ['OPENSHIFT_REPO_DIR'], 'packages'))
 from distutils.sysconfig import get_python_lib
 os.environ['PYTHON_EGG_CACHE'] = get_python_lib()
 

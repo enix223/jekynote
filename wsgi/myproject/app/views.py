@@ -361,13 +361,30 @@ class SyncView(JSONResponseMixin, TemplateView):
             gh_store = gh_client.get_github_store()
             repo = gh_store.get_user().get_repo(form.cleaned_data['repo'])
 
+            import pdb
+            pdb.set_trace()
+
             try:
                 _config = yaml.load(repo.get_contents('_config.yml').decoded_content)
                 post_path = _config['prose']['rooturl']
                 media_path = _config['prose']['media']
+                category, layout = (None, None)
+                for item in _config['prose']['metadata']['_posts']:
+                    if item['name'] == 'categories':
+                        category = item['field']['value']
+                    if item['name'] == 'layout':
+                        layout = item['field']['value']
+
+                if not category or not layout:
+                    return self.render_to_json_response({
+                        'rc': -6,
+                        'message': '_config.yml did not contain layout or categories'}
+                    )
             except:
-                return self.render_to_json_response(
-                    {'rc': -5, 'message': '_config.yml not found or not correct.'})
+                return self.render_to_json_response({
+                    'rc': -5,
+                    'message': '_config.yml not found or not correct.'}
+                )
 
             # step.1 Get the note from API
             try:
@@ -387,15 +404,23 @@ class SyncView(JSONResponseMixin, TemplateView):
                 return self.render_to_json_response(
                     {'rc': -4, 'message': str(e)})
 
+            # Create a jekyll header
+            header = '---'
+            header += '\nlayout: {}'.format(layout)
+            header += '\ncategories: {}'.format(category)
+            header += '\npublished: true'
+            header += '\ntitle: {}'.format(note.title)
+            header += '\n---'
+
             # step.2 Commit the data to Github repo
             md = helper.enml_to_markdown(note.content, media_path)
+
+            # Insert the header before the content
+            md = header + md
 
             # TODO Commit the file to the specify repo (create or update)
             # TODO Use config.yaml settings to locate what is the post path
             path = '/{}/{}'.format(post_path, form.cleaned_data['title'])
-
-            import pdb
-            pdb.set_trace()
 
             try:
                 content = repo.get_contents(path)
