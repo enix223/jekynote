@@ -361,8 +361,8 @@ class SyncView(JSONResponseMixin, TemplateView):
             gh_store = gh_client.get_github_store()
             repo = gh_store.get_user().get_repo(form.cleaned_data['repo'])
 
-            import pdb
-            pdb.set_trace()
+            #import pdb
+            #pdb.set_trace()
 
             try:
                 _config = yaml.load(repo.get_contents('_config.yml').decoded_content)
@@ -410,7 +410,7 @@ class SyncView(JSONResponseMixin, TemplateView):
             header += '\ncategories: {}'.format(category)
             header += '\npublished: true'
             header += '\ntitle: {}'.format(note.title)
-            header += '\n---'
+            header += '\n---\n'
 
             # step.2 Commit the data to Github repo
             md = helper.enml_to_markdown(note.content, media_path)
