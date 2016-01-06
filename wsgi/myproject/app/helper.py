@@ -26,7 +26,7 @@ def get_evernote_client(access_token=None):
         client = EvernoteClient(
           consumer_key=settings.EVERNOTE_CUSUMER_KEY,
           consumer_secret=settings.EVERNOTE_CUSUMER_SECRET,
-          sandbox=True
+          sandbox=settings.DEBUG
         )
     return client
 
