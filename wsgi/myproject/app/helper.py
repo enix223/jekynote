@@ -21,7 +21,7 @@ def get_github_client(access_token=None):
 def get_evernote_client(access_token=None):
     ''' Get the evernote client '''
     if access_token:
-        client = EvernoteClient(token=access_token)
+        client = EvernoteClient(token=access_token, sandbox=settings.DEBUG)
     else:
         client = EvernoteClient(
           consumer_key=settings.EVERNOTE_CUSUMER_KEY,
