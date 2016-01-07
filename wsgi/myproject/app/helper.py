@@ -21,12 +21,12 @@ def get_github_client(access_token=None):
 def get_evernote_client(access_token=None):
     ''' Get the evernote client '''
     if access_token:
-        client = EvernoteClient(token=access_token, sandbox=settings.DEBUG)
+        client = EvernoteClient(token=access_token, sandbox=False)
     else:
         client = EvernoteClient(
           consumer_key=settings.EVERNOTE_CUSUMER_KEY,
           consumer_secret=settings.EVERNOTE_CUSUMER_SECRET,
-          sandbox=settings.DEBUG
+          sandbox=False
         )
     return client
 
@@ -43,7 +43,9 @@ def enml_to_markdown(content, media_path):
     for media in note.select('en-media'):
         name = media.attrs['hash']
         resType = media.attrs['type'].split('/')[1]
-        img = '<img alt="{}" src="{}/{}.{}"/>'.format(name, media_path, name, resType)
+        img = '<img alt="{}" src="/{}/{}.{}">'.format(
+            name, media_path, name, resType)
         html = html.replace(str(media), img)
 
-    return html2text.html2text(html.decode('utf-8'))
+    # Fix unknow line break in the file extension error
+    return html2text.html2text(html.decode('utf-8')).replace('.pn\ng', '.png')

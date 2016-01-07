@@ -14,6 +14,7 @@ from app.models import UserProfile
 import json
 import helper
 import yaml
+import binascii
 
 
 '''def handler500(request):
@@ -361,9 +362,6 @@ class SyncView(JSONResponseMixin, TemplateView):
             gh_store = gh_client.get_github_store()
             repo = gh_store.get_user().get_repo(form.cleaned_data['repo'])
 
-            #import pdb
-            #pdb.set_trace()
-
             try:
                 _config = yaml.load(repo.get_contents('_config.yml').decoded_content)
                 post_path = _config['prose']['rooturl']
@@ -405,12 +403,12 @@ class SyncView(JSONResponseMixin, TemplateView):
                     {'rc': -4, 'message': str(e)})
 
             # Create a jekyll header
-            header = '---'
-            header += '\nlayout: {}'.format(layout)
-            header += '\ncategories: {}'.format(category)
-            header += '\npublished: true'
-            header += '\ntitle: {}'.format(note.title)
-            header += '\n---\n'
+            header = u'---'
+            header += u'\nlayout: {}'.format(layout)
+            header += u'\ncategories: {}'.format(category)
+            header += u'\npublished: true'
+            header += u'\ntitle: {}'.format(note.title.decode('utf-8'))
+            header += u'\n---\n'
 
             # step.2 Commit the data to Github repo
             md = helper.enml_to_markdown(note.content, media_path)
@@ -445,7 +443,7 @@ class SyncView(JSONResponseMixin, TemplateView):
                     # TODO Use config.yaml settings to find out the media path
                     path = '/{}/{}.{}'.format(
                         media_path,
-                        resource.guid,
+                        binascii.hexlify(resource.data.bodyHash),
                         resource.mime.split('/')[1]
                     )
 
@@ -454,12 +452,13 @@ class SyncView(JSONResponseMixin, TemplateView):
                         # File exist, so update it
                         repo.update_file(
                             path, form.cleaned_data['message'],
-                            resource.data, content.sha)
+                            bytes(resource.data.body),
+                            content.sha)
                     except:
                         # File not exist, so create it
                         repo.create_file(
                             path, form.cleaned_data['message'],
-                            resource.data
+                            bytes(resource.data.body)
                         )
         else:
             return self.render_to_json_response({
