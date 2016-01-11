@@ -27,7 +27,7 @@ $(function(){
 			var url = '/sync/'
 			$fnWidgetStatusSet(true); // disable the publish button
 			data = {};
-			$('input[data-note-id]:checked').each(function(){
+			$('input[data-note-id]:checked').each(function(index, elem){
 				var note_guid = $(this).data('note-id');
 				data['note_guid'] = $(this).data('note-id');                                      // Note GUID
 				data['title'] = $('input[data-title-id=' + $(this).data('note-id') + ']').val();  // Markdown file name
@@ -40,28 +40,28 @@ $(function(){
 						url: url,
 						type: 'POST',
 						data: data,
-						complete: function(data){
-							if(data.status == 200 && data.responseText.rc == 0)
+						success: function(data){
+							if(data.rc == 0)
 								$('#status-' + note_guid).html("<i class='uk-icon-check-circle'></i>");
 							else
-								$('#status-' + note_guid).html("<i class='uk-icon-times-circle'></i>");
+								$('#status-' + note_guid).html("<i class='uk-icon-times-circle'></i>");							
+						},
+						error: function(data){
+							$('#status-' + note_guid).html("<i class='uk-icon-times-circle'></i>");
+						},
+						complete: function(){
 							$(document).dequeue();
 						}
 					});
 				});
 
-				$(document).dequeue();
-
-				// $.ajax({
-				// 	url: url,
-				// 	type: 'POST',
-				// 	data: data
-				// }).done(function(){
-				// 	$('#status-' + note_guid).html("<i class='uk-icon-check-circle'></i>");
-				// }).fail(function(){
-				// 	$('#status-' + note_guid).html("<i class='uk-icon-times-circle'></i>");
-				// });
+				// Append a task after the last elem
+				if(index == $('input[data-note-id]:checked').length - 1){
+					$(document).queue($fnWidgetStatusSet); // Enable the widget
+				}
 			});
+
+			$(document).dequeue();
 		}
 		/**
 		  * @breif  Select and de-select all note function
@@ -114,7 +114,7 @@ $(function(){
 		  * @retval None
 		  */
 		$fnWidgetStatusSet = function(disabled){
-			var flag = typeof disabled !== undefined ? disabled : true;
+			var flag = (typeof disabled == 'boolean' ? disabled : false);
 			$btnPublish.prop('disabled', flag);
 			$btnSelectAll.prop('disabled', flag);
 		}
