@@ -1,7 +1,7 @@
 Jekynote
 ========
 
-(Jekynote)[https://jekynote.cloudesk.top] is developed by django + Evernote API + PyGithub.
+[Jekynote](https://jekynote.cloudesk.top) is developed by django + Evernote API + PyGithub. And now Jekynote is hosted on Openshift, one of the most famous free web hosting platform. 
 
 Why do I create such repo
 -------------------------
@@ -32,3 +32,4 @@ Now, you can publish the notes easily to jekyll repo, and most important, the im
 So no more hastiate, try to use Jekynote to simplify your life now...
 
 Have fun, and happy coding. :)
+
